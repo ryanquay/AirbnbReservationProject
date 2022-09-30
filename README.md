@@ -11,6 +11,6 @@
 ### **User Stories:**
 - As a user, I want to be able to **input** a first and last name
 - As a user, I want to be able to **view** all the available dates
-- As a user, I want to be able to **add** reservations
-- As a user, I want to be able to **remove** reservations
+- As a user, I want to be able to **add** reservations to the calendar
+- As a user, I want to be able to **remove** reservations from the calendar
 
