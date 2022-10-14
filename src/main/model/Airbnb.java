@@ -7,12 +7,14 @@ import java.util.List;
 public class Airbnb {
     private static final int DAY_COUNT = 31;
     private List<String> reservations;
+    private String airbnbName;
 
-    public Airbnb() {
+    public Airbnb(String airbnbName) {
         reservations = new ArrayList<>(DAY_COUNT);
         for (int i = 0; i < DAY_COUNT; i++) {
             reservations.add(null);
         }
+        this.airbnbName = airbnbName;
     }
 
     public String displayReservationInformation() {
@@ -49,5 +51,9 @@ public class Airbnb {
 
     public List<String> getReservations() {
         return reservations;
+    }
+
+    public String getAirbnbName() {
+        return airbnbName;
     }
 }
