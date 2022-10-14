@@ -10,5 +10,9 @@ public class Properties {
         properties = new ArrayList<>();
     }
 
+    public void addProperties(Airbnb airbnb, String propertyName) {
+
+    }
+
 
 }
