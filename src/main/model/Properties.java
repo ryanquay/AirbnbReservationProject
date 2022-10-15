@@ -22,12 +22,18 @@ public class Properties implements Days {
         return propertyNames;
     }
 
-    public void printCustomerReservationInfo(String name) {
+    public String printCustomerReservationLocations(String name) {
+        String propertiesBooked = name + " has reservations at: \n";
+        String propertiesBookedTemp = propertiesBooked;
         for (int i = 0; i < properties.size(); i++) {
             if (properties.get(i).getReservations().contains(name)) {
-                for (int)
+                propertiesBooked = propertiesBooked + properties.get(i).getAirbnbName() + "\n";
             }
         }
+        if (propertiesBooked == propertiesBookedTemp) {
+            propertiesBooked = name + "has not booked a reservation at any property.\n";
+        }
+        return propertiesBooked;
     }
 
     public List<Airbnb> getProperties() {
