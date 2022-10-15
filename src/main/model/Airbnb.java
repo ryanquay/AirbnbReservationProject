@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Represents an Airbnb that has dates for reservation
-public class Airbnb {
-    private static final int DAY_COUNT = 31;
+public class Airbnb implements Days {
+
     private List<String> reservations;
     private String airbnbName;
 
@@ -57,7 +57,7 @@ public class Airbnb {
     }
 
     public boolean cancelReservation(String name) {
-        if (reservations.indexOf(name) == -1) {
+        if (!reservations.contains(name)) {
             System.out.println("You have no reservations to cancel.\n");
             return false;
         }
