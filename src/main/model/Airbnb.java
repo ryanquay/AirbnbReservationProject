@@ -56,6 +56,19 @@ public class Airbnb {
         return true;
     }
 
+    public boolean cancelReservation(String name) {
+        if (reservations.indexOf(name) == -1) {
+            System.out.println("You have no reservations to cancel.\n");
+            return false;
+        }
+        for (int i = 0; i < DAY_COUNT; i++) {
+            if (name.equals(reservations.get(i))) {
+                reservations.set(i, null);
+            }
+        }
+        return true;
+    }
+
 
     public List<String> getReservations() {
         return reservations;
