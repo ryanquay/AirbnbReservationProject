@@ -18,7 +18,7 @@ public class Airbnb implements Days {
     }
 
     public String displayReservationInformation() {
-        String displayInformation = "Airbnb Reservation Info\n_______________________\n\n";
+        String displayInformation = this.airbnbName + " Reservation Info\n_______________________\n\n";
         for (int i = 0; i < DAY_COUNT; i++) {
             displayInformation = displayInformation + (i + 1) + ": ";
             if (reservations.get(i) == null) {

@@ -11,8 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AirbnbTest {
     private Airbnb airbnb1;
+    private Airbnb airbnb2;
     private Customer customer;
     private Properties properties;
+
     private List<String> propertyNames;
     private int checkIn;
     private int checkOut;
@@ -21,6 +23,7 @@ class AirbnbTest {
     @BeforeEach
     void setUp() {
         airbnb1 = new Airbnb("House1");
+        airbnb2 = new Airbnb("House 2");
         customer = new Customer("Ryan Quay");
         properties = new Properties();
         propertyNames = new ArrayList<>();
@@ -40,7 +43,6 @@ class AirbnbTest {
     @Test
     void TestSeeAllProperties() {
         List<String> propertyNames = new ArrayList<>();
-        Airbnb airbnb2 = new Airbnb("House 2");
         properties.addProperties(airbnb1);
         properties.addProperties(airbnb2);
         Collections.addAll(propertyNames, airbnb1.getAirbnbName(), airbnb2.getAirbnbName());
@@ -69,6 +71,16 @@ class AirbnbTest {
     }
 
     @Test
+    void TestMakeReservationsInDifferentAirbnb() {
+        properties.addProperties(airbnb1);
+        properties.addProperties(airbnb2);
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(properties.getProperties().get(0).makeReservation(customer.getName(), checkIn,checkOut));
+        assertTrue(properties.getProperties().get(1).makeReservation(customer.getName(), checkIn,checkOut));
+        System.out.println(properties.getProperties().get(0).displayReservationInformation());
+        System.out.println(properties.getProperties().get(1).displayReservationInformation());
+    }
 
     @Test
     void TestInappropriateDaysReserve() {
