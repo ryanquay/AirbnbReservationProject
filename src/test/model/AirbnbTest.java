@@ -146,6 +146,10 @@ class AirbnbTest {
         System.out.println(airbnb1.displayReservationInformation());
     }
 
+    @Test
+    void TestUnableToCancelReservations() {
+        assertFalse(airbnb1.cancelReservation(customer1.getName()));
+    }
 
 
     @Test
