@@ -43,7 +43,7 @@ class AirbnbTest {
 
     @Test
     void TestSeeAllProperties() {
-        List<String> propertyNames = new ArrayList<>();
+        propertyNames = new ArrayList<>();
         properties.addProperties(airbnb1);
         properties.addProperties(airbnb2);
         Collections.addAll(propertyNames, airbnb1.getAirbnbName(), airbnb2.getAirbnbName());

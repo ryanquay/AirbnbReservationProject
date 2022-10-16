@@ -3,7 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Properties implements Days {
+//Represents a list of all the Airbnb properties that are available
+public class Properties {
     private List<Airbnb> properties;
     private String propertiesBooked;
 
@@ -14,6 +15,16 @@ public class Properties implements Days {
 
     public void addProperties(Airbnb airbnb) {
         properties.add(airbnb);
+    }
+
+    public boolean removeProperties(String name) {
+        for (int i = 0; i < properties.size(); i++) {
+            if (properties.get(i).getAirbnbName().equals(name)) {
+                properties.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<String> seeAllProperties() {

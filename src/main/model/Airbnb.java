@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-//Represents an Airbnb that has dates for reservation
+//Represents an Airbnb that has a name and a schedule that represents one month
 public class Airbnb implements Days {
 
     private List<String> reservations;
