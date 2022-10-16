@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class AirbnbTest {
     private Airbnb airbnb1;
     private Airbnb airbnb2;
-    private Customer customer;
+    private Customer customer1;
+    private Customer customer2;
     private Properties properties;
-
     private List<String> propertyNames;
     private int checkIn;
     private int checkOut;
@@ -24,7 +24,8 @@ class AirbnbTest {
     void setUp() {
         airbnb1 = new Airbnb("House1");
         airbnb2 = new Airbnb("House 2");
-        customer = new Customer("Ryan Quay");
+        customer1 = new Customer("Ryan Quay");
+        customer2 = new Customer("Bobby Bob");
         properties = new Properties();
         propertyNames = new ArrayList<>();
 
@@ -55,7 +56,7 @@ class AirbnbTest {
     void TestMakeReservation() {
         checkIn = 2;
         checkOut = 5;
-        assertTrue(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
         System.out.println(airbnb1.displayReservationInformation());
     }
 
@@ -63,10 +64,10 @@ class AirbnbTest {
     void TestMakeMultipleReservations() {
         checkIn = 2;
         checkOut = 5;
-        assertTrue(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
         checkIn = 18;
         checkOut = 22;
-        assertTrue(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
         System.out.println(airbnb1.displayReservationInformation());
     }
 
@@ -76,23 +77,34 @@ class AirbnbTest {
         properties.addProperties(airbnb2);
         checkIn = 2;
         checkOut = 5;
-        assertTrue(properties.getProperties().get(0).makeReservation(customer.getName(), checkIn,checkOut));
-        assertTrue(properties.getProperties().get(1).makeReservation(customer.getName(), checkIn,checkOut));
+        assertTrue(properties.getProperties().get(0).makeReservation(customer1.getName(), checkIn, checkOut));
+        assertTrue(properties.getProperties().get(1).makeReservation(customer1.getName(), checkIn, checkOut));
         System.out.println(properties.getProperties().get(0).displayReservationInformation());
         System.out.println(properties.getProperties().get(1).displayReservationInformation());
+    }
+
+    @Test
+    void TestMakeReservationWithDifferentCustomers() {
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        checkIn = 12;
+        checkOut = 15;
+        assertTrue(airbnb1.makeReservation(customer2.getName(), checkIn, checkOut));
+        System.out.println(airbnb1.displayReservationInformation());
     }
 
     @Test
     void TestInappropriateDaysReserve() {
         checkIn = 0;
         checkOut = 5;
-        assertFalse(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        assertFalse(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
         checkIn = 22;
         checkOut = 32;
-        assertFalse(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        assertFalse(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
         checkIn = 7;
         checkOut = 4;
-        assertFalse(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        assertFalse(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
     }
 
     @Test
