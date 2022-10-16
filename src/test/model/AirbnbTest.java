@@ -14,12 +14,14 @@ class AirbnbTest {
     private Customer customer;
     private Properties properties;
     private List<String> propertyNames;
+    private int checkIn;
+    private int checkOut;
 
 
     @BeforeEach
     void setUp() {
         airbnb1 = new Airbnb("House1");
-        customer = new Customer("Ryan");
+        customer = new Customer("Ryan Quay");
         properties = new Properties();
         propertyNames = new ArrayList<>();
 
@@ -48,22 +50,43 @@ class AirbnbTest {
     }
 
     @Test
+    void TestMakeReservation() {
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        System.out.println(airbnb1.displayReservationInformation());
+    }
+
+    @Test
+    void TestMakeMultipleReservations() {
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        checkIn = 18;
+        checkOut = 22;
+        assertTrue(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
+        System.out.println(airbnb1.displayReservationInformation());
+    }
+
+    @Test
+
+    @Test
     void TestInappropriateDaysReserve() {
-        int checkIn = 0;
-        int checkOut = 5;
+        checkIn = 0;
+        checkOut = 5;
         assertFalse(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
-        checkIn=22;
-        checkOut=32;
+        checkIn = 22;
+        checkOut = 32;
         assertFalse(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
-        checkIn=7;
-        checkOut=4;
+        checkIn = 7;
+        checkOut = 4;
         assertFalse(airbnb1.makeReservation(customer.getName(), checkIn, checkOut));
     }
 
     @Test
     void TestDatesAlreadyReserved() {
-        int checkIn=4;
-        int checkOut=8;
+        checkIn = 4;
+        checkOut = 8;
     }
 
 
