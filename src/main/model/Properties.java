@@ -25,7 +25,7 @@ public class Properties implements Days {
     }
 
     public boolean returnCustomerReservationLocations(String name) {
-        String propertiesBooked = name + " has reservations at: \n";
+        propertiesBooked = name + " has reservations at: \n";
         String propertiesBookedTemp = propertiesBooked;
         for (int i = 0; i < properties.size(); i++) {
             if (properties.get(i).getReservations().contains(name)) {
@@ -33,7 +33,7 @@ public class Properties implements Days {
             }
         }
         if (propertiesBooked == propertiesBookedTemp) {
-            propertiesBooked = name + "has not booked a reservation at any property.\n";
+            propertiesBooked = name + " has not booked a reservation at any property.\n";
             return false;
         }
         return true;
@@ -41,5 +41,9 @@ public class Properties implements Days {
 
     public List<Airbnb> getProperties() {
         return properties;
+    }
+
+    public String getPropertiesBooked() {
+        return propertiesBooked;
     }
 }

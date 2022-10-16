@@ -110,7 +110,14 @@ class AirbnbTest {
         checkOut = 5;
         assertTrue(properties.getProperties().get(0).makeReservation(customer1.getName(), checkIn, checkOut));
         assertTrue(properties.getProperties().get(1).makeReservation(customer1.getName(), checkIn, checkOut));
-        System.out.println(properties.returnCustomerReservationLocations(customer1.getName()));
+        assertTrue(properties.returnCustomerReservationLocations(customer1.getName()));
+        System.out.println(properties.getPropertiesBooked());
+    }
+
+    @Test
+    void TestNoReservationsViewCustomerLocations() {
+        assertFalse(properties.returnCustomerReservationLocations(customer1.getName()));
+        System.out.println(properties.getPropertiesBooked());
     }
 
     @Test
