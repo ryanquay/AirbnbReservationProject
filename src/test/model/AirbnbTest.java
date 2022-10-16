@@ -61,6 +61,14 @@ class AirbnbTest {
     }
 
     @Test
+    void TestMakeReservationAllDays() {
+        checkIn = 1;
+        checkOut =31;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        System.out.println(airbnb1.displayReservationInformation());
+    }
+
+    @Test
     void TestMakeMultipleReservations() {
         checkIn = 2;
         checkOut = 5;
