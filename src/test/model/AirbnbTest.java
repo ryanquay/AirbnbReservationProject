@@ -121,6 +121,19 @@ class AirbnbTest {
     }
 
     @Test
+    void TestCancelReservations() {
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        System.out.println(airbnb1.displayReservationInformation());
+        assertTrue(airbnb1.cancelReservation(customer1.getName()));
+        System.out.println(airbnb1.displayReservationInformation());
+    }
+
+    @Test
+
+
+    @Test
     void TestInappropriateDaysReserve() {
         checkIn = 0;
         checkOut = 5;
