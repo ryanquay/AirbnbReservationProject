@@ -125,11 +125,26 @@ class AirbnbTest {
         checkIn = 2;
         checkOut = 5;
         assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        checkIn = 11;
+        checkOut = 15;
+        assertTrue(airbnb1.makeReservation(customer2.getName(), checkIn, checkOut));
         System.out.println(airbnb1.displayReservationInformation());
         assertTrue(airbnb1.cancelReservation(customer1.getName()));
         System.out.println(airbnb1.displayReservationInformation());
     }
 
+    @Test
+    void TestCancelMultipleReservations() {
+        checkIn=1;
+        checkOut=4;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        checkIn=28;
+        checkOut=31;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        System.out.println(airbnb1.displayReservationInformation());
+        assertTrue(airbnb1.cancelReservation(customer1.getName()));
+        System.out.println(airbnb1.displayReservationInformation());
+    }
 
 
 
