@@ -23,7 +23,7 @@ class AirbnbTest {
     @BeforeEach
     void setUp() {
         airbnb1 = new Airbnb("House1");
-        airbnb2 = new Airbnb("House 2");
+        airbnb2 = new Airbnb("House2");
         customer1 = new Customer("Ryan Quay");
         customer2 = new Customer("Bobby Bob");
         properties = new Properties();
@@ -100,6 +100,17 @@ class AirbnbTest {
         checkOut = 15;
         assertTrue(airbnb1.makeReservation(customer2.getName(), checkIn, checkOut));
         System.out.println(airbnb1.displayReservationInformation());
+    }
+
+    @Test
+    void TestViewCustomerReservationLocations() {
+        properties.addProperties(airbnb1);
+        properties.addProperties(airbnb2);
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(properties.getProperties().get(0).makeReservation(customer1.getName(), checkIn, checkOut));
+        assertTrue(properties.getProperties().get(1).makeReservation(customer1.getName(), checkIn, checkOut));
+        System.out.println(properties.returnCustomerReservationLocations(customer1.getName()));
     }
 
     @Test

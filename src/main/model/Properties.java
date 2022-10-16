@@ -5,9 +5,11 @@ import java.util.List;
 
 public class Properties implements Days {
     private List<Airbnb> properties;
+    private String propertiesBooked;
 
     public Properties() {
         properties = new ArrayList<>();
+        propertiesBooked = "";
     }
 
     public void addProperties(Airbnb airbnb) {
@@ -22,7 +24,7 @@ public class Properties implements Days {
         return propertyNames;
     }
 
-    public String returnCustomerReservationLocations(String name) {
+    public boolean returnCustomerReservationLocations(String name) {
         String propertiesBooked = name + " has reservations at: \n";
         String propertiesBookedTemp = propertiesBooked;
         for (int i = 0; i < properties.size(); i++) {
@@ -32,8 +34,9 @@ public class Properties implements Days {
         }
         if (propertiesBooked == propertiesBookedTemp) {
             propertiesBooked = name + "has not booked a reservation at any property.\n";
+            return false;
         }
-        return propertiesBooked;
+        return true;
     }
 
     public List<Airbnb> getProperties() {
