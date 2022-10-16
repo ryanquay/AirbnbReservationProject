@@ -167,8 +167,10 @@ class AirbnbTest {
 
     @Test
     void TestDatesAlreadyReserved() {
-        checkIn = 4;
-        checkOut = 8;
+        checkIn = 2;
+        checkOut = 5;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
+        assertFalse(airbnb1.makeReservation(customer1.getName(), checkIn, checkOut));
     }
 
 
