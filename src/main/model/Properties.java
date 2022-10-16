@@ -22,7 +22,7 @@ public class Properties implements Days {
         return propertyNames;
     }
 
-    public String printCustomerReservationLocations(String name) {
+    public String returnCustomerReservationLocations(String name) {
         String propertiesBooked = name + " has reservations at: \n";
         String propertiesBookedTemp = propertiesBooked;
         for (int i = 0; i < properties.size(); i++) {
