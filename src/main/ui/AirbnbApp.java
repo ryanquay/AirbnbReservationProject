@@ -4,7 +4,6 @@ package ui;
 import model.Airbnb;
 import model.Properties;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class AirbnbApp {
@@ -16,6 +15,7 @@ public class AirbnbApp {
 
 
     public AirbnbApp() {
+        initialSetUp();
         runAirbnbApp();
     }
 
@@ -23,15 +23,16 @@ public class AirbnbApp {
         boolean keepGoing = true;
         String command = null;
 
+
+
         while (keepGoing) {
             displayLoginMenu();
             command = input.next();
-
-
-            if (command.equalsIgnoreCase("q")) {
+            command = command.toLowerCase();
+            if (command.equals("q")) {
                 keepGoing = false;
             } else {
-                processCommand(command);
+                processMenuCommand(command);
             }
         }
     }
@@ -42,13 +43,25 @@ public class AirbnbApp {
     }
 
     private void displayLoginMenu() {
-        System.out.println("Welcome! Please login as: ");
+        System.out.println("\nWelcome! Please login as: ");
         System.out.println("a -> Admin");
         System.out.println("c -> Customer");
         System.out.println("q -> quit");
     }
 
-    private void processCommand(String command) {
+    private void processMenuCommand(String command) {
+        if (command.equals("a")) {
+            displayAdminMenu();
+            command = input.next();
+            command = command.toLowerCase();
+        }
+    }
 
+    private void displayAdminMenu() {
+        System.out.println("\nSelect from: ");
+        System.out.println("s -> See all properties");
+        System.out.println("a -> Add Airbnb");
+        System.out.println("r -> Remove Airbnb");
+        System.out.println("b -> Back");
     }
 }
