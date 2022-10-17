@@ -51,6 +51,12 @@ class AirbnbTest {
     }
 
     @Test
+    void TestAddingPropertyThatExistsAlready() {
+        assertTrue(properties.addProperties(airbnb1));
+        assertFalse(properties.addProperties(airbnb1));
+    }
+
+    @Test
     void TestRemoveProperties() {
         assertTrue(properties.addProperties(airbnb1));
         assertTrue(properties.addProperties(airbnb2));
@@ -129,8 +135,13 @@ class AirbnbTest {
 
     @Test
     void TestNoReservationsViewCustomerLocations() {
+        checkIn = 2;
+        checkOut = 5;
+        airbnb1.makeReservation(customer2.getName(), checkIn, checkOut);
+        properties.addProperties(airbnb1);
+        assertTrue(properties.returnCustomerReservationLocations(customer2.getName()));
         assertFalse(properties.returnCustomerReservationLocations(customer1.getName()));
-        System.out.println(properties.getPropertiesBooked());
+
     }
 
     @Test

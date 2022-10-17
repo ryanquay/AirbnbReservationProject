@@ -24,15 +24,15 @@ public class Properties {
      *          return false
      */
     public boolean addProperties(Airbnb airbnb) {
-        if (properties.contains(airbnb.getAirbnbName())) {
-            System.out.println("You already have a property with the same name.\n");
-            return false;
-        } else {
-            properties.add(airbnb);
-            System.out.println("Airbnb added.");
-            return true;
+        for (int i = 0; i < properties.size(); i++) {
+            if (properties.get(i).getAirbnbName().equals(airbnb.getAirbnbName())) {
+                System.out.println("You already have a property with the same name.\n");
+                return false;
+            }
         }
-
+        properties.add(airbnb);
+        System.out.println("Airbnb added.");
+        return true;
     }
 
     /*

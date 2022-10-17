@@ -28,7 +28,6 @@ public class AirbnbApp {
 
         while (keepGoing) {
             displayLoginMenu();
-
             command = input.next();
             command = command.toLowerCase();
             if (command.equals("q")) {
@@ -90,7 +89,7 @@ public class AirbnbApp {
             System.out.println(propertyList.seeAllProperties());
         } else if (command.equals("a")) {
             System.out.println("Enter a name for the new Airbnb: ");
-            airbnbName = input.nextLine();
+            airbnbName = input.next();
             propertyList.addProperties(new Airbnb(airbnbName));
         } else if (command.equals("r")) {
             System.out.println("Enter the name of the Airbnb you want to remove: ");
