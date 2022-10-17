@@ -6,9 +6,15 @@ import java.util.List;
 //Represents an Airbnb that has a name and a schedule that represents one month
 public class Airbnb implements Days {
 
-    private List<String> reservations;
-    private String airbnbName;
+    private List<String> reservations; //A list that will contain all the days that can be reserved
+    private String airbnbName; //The name of the Airbnb
 
+    /*
+     * REQUIRES: airbnbName has a non-zero length
+     * EFFECTS: reservations is set to have a size of DAY_COUNT;
+     *          Set each index in reservations to null; airbnbName
+     *          is set to airbnbName passed in as a parameter
+     */
     public Airbnb(String airbnbName) {
         reservations = new ArrayList<>(DAY_COUNT);
         for (int i = 0; i < DAY_COUNT; i++) {
@@ -17,6 +23,11 @@ public class Airbnb implements Days {
         this.airbnbName = airbnbName;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: The available and reserved dates are added to
+     *          displayInformation, which is returned
+     */
     public String displayReservationInformation() {
         String displayInformation = this.airbnbName + " Reservation Info\n_______________________\n\n";
         for (int i = 0; i < DAY_COUNT; i++) {
@@ -30,6 +41,14 @@ public class Airbnb implements Days {
         return displayInformation;
     }
 
+    /*
+     * REQUIRES: name has a non-zero length; checkInDate >=1
+     *           and checkInDate <= DAY_COUNT; checkOutDate >= 1
+     *           and checkOutDate <= DAY_COUNT; checkInDate <= checkOutDate
+     * MODIFIES: this
+     * EFFECTS: Returns false if you cannot make a reservation
+     *          and true if you can
+     */
     public boolean makeReservation(String name, int checkInDate, int checkOutDate) {
         if (checkInDate < 1 || checkOutDate > DAY_COUNT || checkOutDate < checkInDate) {
             System.out.println("Please choose appropriate check in and/or check out dates.\n");
@@ -49,6 +68,12 @@ public class Airbnb implements Days {
         return reserveDays(name, checkInDate, checkOutDate, reservations);
     }
 
+    /*
+     * *The REQUIRES method is not necessary I think because the
+     * makeReservation method already checks them before calling this method*
+     * MODIFIES: this
+     * EFFECTS: Adds the customer's name to their chosen reservation dates and returns true
+     */
     public boolean reserveDays(String name, int checkInDate, int checkOutDate, List<String> reservations) {
         for (int i = checkInDate - 1; i <= checkOutDate - 1; i++) {
             reservations.set(i, name);
@@ -56,6 +81,12 @@ public class Airbnb implements Days {
         return true;
     }
 
+    /*
+     * REQUIRES: name has a non-zero length
+     * MODIFIES: this
+     * EFFECTS: Removes all reservations make by customer name and returns true.
+     *          Returns false if customer name has no reservations to cancel
+     */
     public boolean cancelReservation(String name) {
         if (!reservations.contains(name)) {
             System.out.println("You have no reservations to cancel.\n");
