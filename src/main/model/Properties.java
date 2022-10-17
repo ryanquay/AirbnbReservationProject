@@ -13,13 +13,20 @@ public class Properties {
         propertiesBooked = "";
     }
 
-    public void addProperties(Airbnb airbnb) {
-        properties.add(airbnb);
+    public boolean addProperties(Airbnb airbnb) {
+        if (properties.contains(airbnb.getAirbnbName())) {
+            System.out.println("You already have a property with the same name.\n");
+            return false;
+        } else {
+            properties.add(airbnb);
+            return true;
+        }
+
     }
 
     public boolean removeProperties(String name) {
         for (int i = 0; i < properties.size(); i++) {
-            if (properties.get(i).getAirbnbName().equals(name)) {
+            if (properties.get(i).getAirbnbName().equalsIgnoreCase(name)) {
                 properties.remove(i);
                 return true;
             }
@@ -43,7 +50,7 @@ public class Properties {
                 propertiesBooked = propertiesBooked + properties.get(i).getAirbnbName() + "\n";
             }
         }
-        if (propertiesBooked == propertiesBookedTemp) {
+        if (propertiesBooked.equalsIgnoreCase(propertiesBookedTemp)) {
             propertiesBooked = name + " has not booked a reservation at any property.\n";
             return false;
         }

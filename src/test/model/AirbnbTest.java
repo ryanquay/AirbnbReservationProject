@@ -42,14 +42,20 @@ class AirbnbTest {
     }
 
     @Test
-    void TestSeeAllProperties() {
-        propertyNames = new ArrayList<>();
-        properties.addProperties(airbnb1);
-        properties.addProperties(airbnb2);
+    void TestAddAndSeeAllProperties() {
+        assertTrue(properties.addProperties(airbnb1));
+        assertTrue(properties.addProperties(airbnb2));
         Collections.addAll(propertyNames, airbnb1.getAirbnbName(), airbnb2.getAirbnbName());
         assertEquals(properties.seeAllProperties(), propertyNames);
         System.out.println(properties.seeAllProperties());
+    }
 
+    @Test
+    void TestRemoveProperties() {
+        assertTrue(properties.addProperties(airbnb1));
+        assertTrue(properties.addProperties(airbnb2));
+        assertTrue(properties.removeProperties("House1"));
+        System.out.println(properties.seeAllProperties());
     }
 
     @Test
