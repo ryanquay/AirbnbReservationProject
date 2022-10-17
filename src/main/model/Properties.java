@@ -29,6 +29,7 @@ public class Properties {
             return false;
         } else {
             properties.add(airbnb);
+            System.out.println("Airbnb added.");
             return true;
         }
 

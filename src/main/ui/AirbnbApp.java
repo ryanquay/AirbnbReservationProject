@@ -24,7 +24,6 @@ public class AirbnbApp {
         String command = null;
 
 
-
         while (keepGoing) {
             displayLoginMenu();
             command = input.next();
@@ -50,11 +49,16 @@ public class AirbnbApp {
     }
 
     private void processMenuCommand(String command) {
-        if (command.equals("a")) {
-            displayAdminMenu();
-            command = input.next();
-            command = command.toLowerCase();
+        boolean menuKeepGoing = true;
+        while (menuKeepGoing) {
+            if (command.equals("a")) {
+                displayAdminMenu();
+                command = input.next();
+                command = command.toLowerCase();
+                processAdminCommands(command);
+            }
         }
+
     }
 
     private void displayAdminMenu() {
@@ -63,5 +67,23 @@ public class AirbnbApp {
         System.out.println("a -> Add Airbnb");
         System.out.println("r -> Remove Airbnb");
         System.out.println("b -> Back");
+    }
+
+    private void processAdminCommands(String command) {
+        if (command.equals("s")) {
+            System.out.println(propertyList.seeAllProperties());
+        } else if (command.equals("a")) {
+            System.out.println("Enter a name for the new Airbnb: ");
+            command = input.nextLine();
+            propertyList.addProperties(new Airbnb(command));
+        } else if (command.equals("r")) {
+            System.out.println("Enter the name of the Airbnb you want to remove: ");
+            command = input.nextLine();
+            propertyList.removeProperties(command);
+        } else if (command.equals("b")) {
+            runAirbnbApp();
+        } else {
+            System.out.println("Selection not valid...");
+        }
     }
 }
