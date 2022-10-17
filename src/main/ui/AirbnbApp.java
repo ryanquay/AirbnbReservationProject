@@ -6,22 +6,31 @@ import model.Properties;
 
 import java.util.Scanner;
 
+//ISSUES WITH QUITTING AFTER PROCESSING SOME INPUTS WITH SCANNER. ASK TA.
+
+
+
+//Airbnb application
 public class AirbnbApp {
-    private Scanner input;
-    private String customerName;
-    private String airbnbName;
-    private Properties propertyList;
-    private boolean menuKeepGoing;
-    private Airbnb customerAirbnb;
-    private int checkIn;
-    private int checkOut;
+    private Scanner input; //Read inputs
+    private String customerName; //Store customer name
+    private String airbnbName; //Store Airbnb name
+    private Properties propertyList; //Store Airbnbs
+    private boolean menuKeepGoing; //Used to keep application running
+    private Airbnb customerAirbnb; //The airbnb a customer chooses to make reservations or cancellations
+    private int checkIn; //Store check in day
+    private int checkOut; //Store check out day
 
-
+    // EFFECTS: Runs initial set up and Airbnb application
     public AirbnbApp() {
         initialSetUp();
         runAirbnbApp();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Processes user input
+     */
     private void runAirbnbApp() {
         boolean keepGoing = true;
         String command = null;
@@ -38,6 +47,10 @@ public class AirbnbApp {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Add an initial Airbnb, so it does not start with zero properties
+     */
     private void initialSetUp() {
         propertyList = new Properties();
         propertyList.addProperties(new Airbnb("House1"));
@@ -46,6 +59,7 @@ public class AirbnbApp {
 
     }
 
+    // EFFECTS: Displays the login menu options to user
     private void displayLoginMenu() {
         System.out.println("\nWelcome! Please login as: ");
         System.out.println("a -> Admin");
@@ -53,6 +67,10 @@ public class AirbnbApp {
         System.out.println("q -> quit");
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Processes user input for login menu options
+     */
     private void processMenuCommand(String command) {
         menuKeepGoing = true;
         if (command.equals("a")) {
@@ -75,7 +93,7 @@ public class AirbnbApp {
         }
     }
 
-
+    // EFFECTS: Displays menu options for admin only
     private void displayAdminMenu() {
         System.out.println("\nSelect from: ");
         System.out.println("s -> See all properties");
@@ -84,6 +102,10 @@ public class AirbnbApp {
         System.out.println("b -> Back");
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Processes user input for admin menu options
+     */
     private void processAdminCommands(String command) {
         if (command.equals("s")) {
             System.out.println(propertyList.seeAllProperties());
@@ -103,6 +125,7 @@ public class AirbnbApp {
         }
     }
 
+    // EFFECTS: Displays menu options for customers only
     private void displayCustomerMenu() {
         System.out.println("\nSelect from: ");
         System.out.println("s -> See all available properties");
@@ -112,6 +135,10 @@ public class AirbnbApp {
         System.out.println("b -> Back");
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Processes user input for customer menu options
+     */
     private void processCustomerCommands(String command) {
         if (command.equals("s")) {
             System.out.println(propertyList.seeAllProperties());
@@ -130,6 +157,10 @@ public class AirbnbApp {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Processes user input to determine if they can make a reservation
+     */
     private void makeReservation() {
         System.out.println("Choose the Airbnb name you want to make reservations at: ");
         airbnbName = input.next();
@@ -148,6 +179,10 @@ public class AirbnbApp {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Reserves dates for customers
+     */
     private void reserveDates(Airbnb chosenAirbnb) {
         System.out.println(chosenAirbnb.displayReservationInformation());
         System.out.println("Choose your check in date: ");
@@ -157,6 +192,10 @@ public class AirbnbApp {
         chosenAirbnb.makeReservation(customerName, checkIn, checkOut);
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Processes user input and determines if they can cancel reservations
+     */
     private void cancelReservations() {
         System.out.println("Choose the Airbnb name you want to cancel your reservations at: ");
         airbnbName = input.next();
