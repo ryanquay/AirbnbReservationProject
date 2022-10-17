@@ -91,8 +91,10 @@ public class Properties {
     }
 
     public boolean airbnbExists(String name) {
-        if (properties.contains(name)) {
-            return true;
+        for (int i = 0; i < properties.size(); i++) {
+            if (properties.get(i).getAirbnbName().equals(name)) {
+                return true;
+            }
         }
         System.out.println("This Airbnb name does not exist.");
         return false;

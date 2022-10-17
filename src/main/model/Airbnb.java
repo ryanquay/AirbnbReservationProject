@@ -90,7 +90,7 @@ public class Airbnb implements Days {
      */
     public boolean cancelReservation(String name) {
         if (!reservations.contains(name)) {
-            System.out.println("You have no reservations to cancel.\n");
+            System.out.println("You have no reservations to cancel or Airbnb does not exist.\n");
             return false;
         }
         for (int i = 0; i < DAY_COUNT; i++) {

@@ -194,6 +194,13 @@ class AirbnbTest {
         assertFalse(airbnb1.makeReservation(customer2.getName(), checkIn, checkOut));
     }
 
+    @Test
+    void TestIfAirbnbExists() {
+        assertTrue(properties.addProperties(airbnb1));
+        assertTrue(properties.airbnbExists(airbnb1.getAirbnbName()));
+        assertFalse(properties.airbnbExists(airbnb2.getAirbnbName()));
+    }
+
 
 }
 
