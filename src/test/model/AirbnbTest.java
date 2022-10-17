@@ -54,7 +54,14 @@ class AirbnbTest {
     void TestRemoveProperties() {
         assertTrue(properties.addProperties(airbnb1));
         assertTrue(properties.addProperties(airbnb2));
-        assertTrue(properties.removeProperties("House1"));
+        assertTrue(properties.removeProperties(airbnb1.getAirbnbName()));
+        System.out.println(properties.seeAllProperties());
+    }
+
+    @Test
+    void TestRemovePropertyThatDoesNotExist() {
+        assertTrue(properties.addProperties(airbnb1));
+        assertFalse(properties.removeProperties(airbnb2.getAirbnbName()));
         System.out.println(properties.seeAllProperties());
     }
 
