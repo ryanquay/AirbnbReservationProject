@@ -24,8 +24,7 @@ public class AirbnbApp {
 
     private void runAirbnbApp() {
         boolean keepGoing = true;
-        String command = null;
-
+        String command;
 
         while (keepGoing) {
             displayLoginMenu();
@@ -42,6 +41,8 @@ public class AirbnbApp {
     private void initialSetUp() {
         propertyList = new Properties();
         propertyList.addProperties(new Airbnb("House1"));
+        input = new Scanner(System.in);
+
     }
 
     private void displayLoginMenu() {
@@ -81,24 +82,17 @@ public class AirbnbApp {
         System.out.println("b -> Back");
     }
 
-    private void displayCustomerMenu() {
-        System.out.println("\nSelect from: ");
-        System.out.println("s -> See all available properties");
-        System.out.println("m -> Make reservations");
-        System.out.println("c -> Cancel reservations");
-        System.out.println("v -> View properties that you have reservations for");
-        System.out.println("b -> Back");
-    }
-
     private void processAdminCommands(String command) {
         if (command.equals("s")) {
             System.out.println(propertyList.seeAllProperties());
         } else if (command.equals("a")) {
             System.out.println("Enter a name for the new Airbnb: ");
+            input.nextLine();
             airbnbName = input.nextLine();
             propertyList.addProperties(new Airbnb(airbnbName));
         } else if (command.equals("r")) {
             System.out.println("Enter the name of the Airbnb you want to remove: ");
+            input.nextLine();
             airbnbName = input.nextLine();
             propertyList.removeProperties(airbnbName);
         } else if (command.equals("b")) {
@@ -109,24 +103,50 @@ public class AirbnbApp {
         }
     }
 
+    private void displayCustomerMenu() {
+        System.out.println("\nSelect from: ");
+        System.out.println("s -> See all available properties");
+        System.out.println("m -> Make reservations");
+        System.out.println("c -> Cancel reservations");
+        System.out.println("v -> View properties that you have reservations for");
+        System.out.println("b -> Back");
+    }
+
     private void processCustomerCommands(String command) {
         if (command.equals("s")) {
             System.out.println(propertyList.seeAllProperties());
         } else if (command.equals("m")) {
             makeReservation();
+        } else if (command.equals("c")) {
+            cancelReservations();
+        } else if (command.equals("v")) {
+            propertyList.returnCustomerReservationLocations(customerName);
+        } else if (command.equals("b")) {
+            menuKeepGoing = false;
+            runAirbnbApp();
+        } else {
+            System.out.println("Selection not valid...");
         }
     }
 
     private void makeReservation() {
         System.out.println("Choose the Airbnb name you want to make reservations at: ");
+        input.nextLine();
         airbnbName = input.nextLine();
-        for (int i = 0; i < propertyList.getProperties().size(); i++) {
-            if (propertyList.getProperties().get(i).getAirbnbName().equals(airbnbName)) {
-                customerAirbnb = propertyList.getProperties().get(i);
-                break;
+        if (propertyList.airbnbExists(airbnbName)) {
+            for (int i = 0; i < propertyList.getProperties().size(); i++) {
+                if (propertyList.getProperties().get(i).getAirbnbName().equals(airbnbName)) {
+                    customerAirbnb = propertyList.getProperties().get(i);
+                    break;
+                }
             }
+            reserveDates(customerAirbnb);
+        } else {
+            System.out.println("List of Airbnb names: ");
+            System.out.println(propertyList.seeAllProperties());
+            makeReservation();
         }
-        reserveDates(customerAirbnb);
+
 
     }
 
@@ -136,6 +156,18 @@ public class AirbnbApp {
         checkIn = input.nextInt();
         System.out.println("Choose your check out date: ");
         checkOut = input.nextInt();
-        chosenAirbnb.makeReservation(customerName,checkIn,checkOut);
+        chosenAirbnb.makeReservation(customerName, checkIn, checkOut);
+    }
+
+    private void cancelReservations() {
+        System.out.println("Choose the Airbnb name you want to cancel your reservations at: ");
+        airbnbName = input.nextLine();
+        for (int i = 0; i < propertyList.getProperties().size(); i++) {
+            if (propertyList.getProperties().get(i).getAirbnbName().equals(airbnbName)) {
+                customerAirbnb = propertyList.getProperties().get(i);
+                break;
+            }
+        }
+        customerAirbnb.cancelReservation(airbnbName);
     }
 }
