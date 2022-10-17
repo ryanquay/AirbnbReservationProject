@@ -46,6 +46,7 @@ public class Properties {
         for (int i = 0; i < properties.size(); i++) {
             if (properties.get(i).getAirbnbName().equalsIgnoreCase(name)) {
                 properties.remove(i);
+                System.out.println(name + " removed.");
                 return true;
             }
         }
@@ -87,6 +88,14 @@ public class Properties {
             return false;
         }
         return true;
+    }
+
+    public boolean airbnbExists(String name) {
+        if (properties.contains(name)) {
+            return true;
+        }
+        System.out.println("This Airbnb name does not exist.");
+        return false;
     }
 
     public List<Airbnb> getProperties() {

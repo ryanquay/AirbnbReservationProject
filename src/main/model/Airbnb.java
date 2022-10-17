@@ -98,6 +98,7 @@ public class Airbnb implements Days {
                 reservations.set(i, null);
             }
         }
+        System.out.println("Reservations cancelled.");
         return true;
     }
 
