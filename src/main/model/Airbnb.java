@@ -78,6 +78,7 @@ public class Airbnb implements Days {
         for (int i = checkInDate - 1; i <= checkOutDate - 1; i++) {
             reservations.set(i, name);
         }
+        System.out.println("Reservations Added.");
         return true;
     }
 

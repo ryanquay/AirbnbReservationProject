@@ -12,7 +12,9 @@ public class AirbnbApp {
     private String airbnbName;
     private Properties propertyList;
     private boolean menuKeepGoing;
-    //private Airbnb airbnb;
+    private Airbnb customerAirbnb;
+    private int checkIn;
+    private int checkOut;
 
 
     public AirbnbApp() {
@@ -63,6 +65,9 @@ public class AirbnbApp {
             customerName = input.nextLine();
             while (menuKeepGoing) {
                 displayCustomerMenu();
+                command = input.next();
+                command = command.toLowerCase();
+                processCustomerCommands(command);
             }
 
         }
@@ -102,5 +107,35 @@ public class AirbnbApp {
         } else {
             System.out.println("Selection not valid...");
         }
+    }
+
+    private void processCustomerCommands(String command) {
+        if (command.equals("s")) {
+            System.out.println(propertyList.seeAllProperties());
+        } else if (command.equals("m")) {
+            makeReservation();
+        }
+    }
+
+    private void makeReservation() {
+        System.out.println("Choose the Airbnb name you want to make reservations at: ");
+        airbnbName = input.nextLine();
+        for (int i = 0; i < propertyList.getProperties().size(); i++) {
+            if (propertyList.getProperties().get(i).getAirbnbName().equals(airbnbName)) {
+                customerAirbnb = propertyList.getProperties().get(i);
+                break;
+            }
+        }
+        reserveDates(customerAirbnb);
+
+    }
+
+    private void reserveDates(Airbnb chosenAirbnb) {
+        System.out.println(chosenAirbnb.displayReservationInformation());
+        System.out.println("Choose your check in date: ");
+        checkIn = input.nextInt();
+        System.out.println("Choose your check out date: ");
+        checkOut = input.nextInt();
+        chosenAirbnb.makeReservation(customerName,checkIn,checkOut);
     }
 }
