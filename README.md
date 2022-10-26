@@ -14,5 +14,7 @@
 - As a customer, I want to be able to **make** reservations 
 - As a customer, I want to be able to **remove** reservations 
 - As an owner, I want to be able to **add** Airbnbs to my properties
+- As the user, I want to have the option of saving all the properties along with reservations associated with them
+- As a user, I want to have the option of loading all the properties along with reservations associated with them from file
 
 ### DISCLAIMER: I did not realize my user stories did not fulfill the adding an arbitrary amount of X to Ys requirement during phase 0. I changed my stories and adapted my application to fulfill this requirement.
