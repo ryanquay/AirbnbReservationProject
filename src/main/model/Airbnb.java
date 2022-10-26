@@ -1,10 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Represents an Airbnb that has a name and a schedule that represents one month
-public class Airbnb implements Days {
+public class Airbnb implements Writable {
+
+    private static final int DAY_COUNT = 31; //Number of days a house will display
 
     private List<String> reservations; //A list that will contain all the days that can be reserved
     private String airbnbName; //The name of the Airbnb
@@ -105,5 +110,13 @@ public class Airbnb implements Days {
 
     public String getAirbnbName() {
         return airbnbName;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("airbnb name", airbnbName);
+        json.put("reservations", reservations);
+        return json;
     }
 }

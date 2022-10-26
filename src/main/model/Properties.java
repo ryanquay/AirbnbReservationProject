@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Represents a list of all the Airbnb properties that are available
-public class Properties {
+public class Properties implements Writable {
     private List<Airbnb> properties; //A list that stores Airbnb objects
     private String propertiesBooked; //Keeps track of which properties a customer has reservations at
 
@@ -106,5 +109,12 @@ public class Properties {
 
     public String getPropertiesBooked() {
         return propertiesBooked;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("properties", properties);
+        return json;
     }
 }
