@@ -108,6 +108,10 @@ public class Airbnb implements Writable {
         return reservations;
     }
 
+    public void setReservations(List<String> reservations) {
+        this.reservations = reservations;
+    }
+
     public String getAirbnbName() {
         return airbnbName;
     }

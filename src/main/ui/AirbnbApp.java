@@ -4,9 +4,11 @@ package ui;
 import model.Airbnb;
 import model.Customer;
 import model.Properties;
+import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 //ISSUES WITH QUITTING AFTER PROCESSING SOME INPUTS WITH SCANNER. ASK TA.
@@ -25,11 +27,13 @@ public class AirbnbApp {
 
     private static final String JSON_STORE = "./data/properties.json";
     private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: Runs initial set up and Airbnb application
     public AirbnbApp() {
         initialSetUp();
         jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runAirbnbApp();
     }
 
@@ -76,6 +80,7 @@ public class AirbnbApp {
         System.out.println("a -> Admin");
         System.out.println("c -> Customer");
         System.out.println("s -> save properties to file");
+        System.out.println("l -> load properties from file");
         System.out.println("q -> quit");
     }
 
@@ -104,6 +109,8 @@ public class AirbnbApp {
 
         } else if (command.equals("s")) {
             saveProperties();
+        } else if (command.equals("l")) {
+            loadProperties();
         }
     }
 
@@ -230,6 +237,15 @@ public class AirbnbApp {
             System.out.println("Saved properties to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadProperties() {
+        try {
+            propertyList = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }
