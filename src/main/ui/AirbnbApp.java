@@ -4,11 +4,12 @@ package ui;
 import model.Airbnb;
 import model.Customer;
 import model.Properties;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 //ISSUES WITH QUITTING AFTER PROCESSING SOME INPUTS WITH SCANNER. ASK TA.
-
 
 
 //Airbnb application
@@ -22,9 +23,13 @@ public class AirbnbApp {
     private int checkIn; //Store check in day
     private int checkOut; //Store check out day
 
+    private static final String JSON_STORE = "./data/properties.json";
+    private JsonWriter jsonWriter;
+
     // EFFECTS: Runs initial set up and Airbnb application
     public AirbnbApp() {
         initialSetUp();
+        jsonWriter = new JsonWriter(JSON_STORE);
         runAirbnbApp();
     }
 
@@ -49,7 +54,7 @@ public class AirbnbApp {
                 processMenuCommand(command);
             }
         }
-        
+
     }
 
     /*
@@ -67,9 +72,10 @@ public class AirbnbApp {
 
     // EFFECTS: Displays the login menu options to user
     private void displayLoginMenu() {
-        System.out.println("\nWelcome! Please login as: ");
+        System.out.println("\nWelcome! Select from: ");
         System.out.println("a -> Admin");
         System.out.println("c -> Customer");
+        System.out.println("s -> save properties to file");
         System.out.println("q -> quit");
     }
 
@@ -96,6 +102,8 @@ public class AirbnbApp {
                 processCustomerCommands(command);
             }
 
+        } else if (command.equals("s")) {
+            saveProperties();
         }
     }
 
@@ -212,5 +220,16 @@ public class AirbnbApp {
             }
         }
         customerAirbnb.cancelReservation(customerName);
+    }
+
+    private void saveProperties() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(propertyList);
+            jsonWriter.close();
+            System.out.println("Saved properties to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 }
