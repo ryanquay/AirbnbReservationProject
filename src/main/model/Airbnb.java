@@ -54,12 +54,8 @@ public class Airbnb implements Days {
             System.out.println("Please choose appropriate check in and/or check out dates.\n");
             return false;
         }
-        for (int i = checkInDate; i < checkOutDate; i++) {
-            if (reservations.get(i) == name) {
-                System.out.println("You have already reserved at least one of your chosen dates. \n"
-                        + "Please choose a timeframe of available days.\n");
-                return false;
-            } else if (reservations.get(i) != null) {
+        for (int i = checkInDate - 1; i < checkOutDate - 1; i++) {
+            if (reservations.get(i) != null) {
                 System.out.println("At least one of your chosen days have been reserved by another person. \n"
                         + "Please choose a timeframe of available days.\n");
                 return false;

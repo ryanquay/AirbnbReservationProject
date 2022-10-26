@@ -38,6 +38,9 @@ class AirbnbTest {
 
     @Test
     void TestDisplayReservationInfoNoReservations() {
+        for (String dates: airbnb1.getReservations()) {
+            assertNull(dates);
+        }
         System.out.println(airbnb1.displayReservationInformation());
     }
 

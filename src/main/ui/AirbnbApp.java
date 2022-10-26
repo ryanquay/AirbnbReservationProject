@@ -2,6 +2,7 @@ package ui;
 
 
 import model.Airbnb;
+import model.Customer;
 import model.Properties;
 
 import java.util.Scanner;
@@ -40,11 +41,15 @@ public class AirbnbApp {
             command = input.next();
             command = command.toLowerCase();
             if (command.equals("q")) {
-                keepGoing = false;
+                System.out.println("Goodbye!");
+                input.close();
+                System.exit(0);
+
             } else {
                 processMenuCommand(command);
             }
         }
+        
     }
 
     /*
@@ -56,6 +61,7 @@ public class AirbnbApp {
         propertyList.addProperties(new Airbnb("House1"));
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+
 
     }
 
