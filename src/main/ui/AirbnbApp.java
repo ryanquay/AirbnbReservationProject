@@ -25,12 +25,12 @@ public class AirbnbApp {
     private int checkIn; //Store check in day
     private int checkOut; //Store check out day
 
-    private static final String JSON_STORE = "./data/properties.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/properties.json";  //Location to store saved data file
+    private JsonWriter jsonWriter; //Writer
+    private JsonReader jsonReader; //Reader
 
     // EFFECTS: Runs initial set up and Airbnb application
-    public AirbnbApp() {
+    public AirbnbApp() throws FileNotFoundException {
         initialSetUp();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -229,6 +229,7 @@ public class AirbnbApp {
         customerAirbnb.cancelReservation(customerName);
     }
 
+    //EFFECTS: Saves properties to file
     private void saveProperties() {
         try {
             jsonWriter.open();
@@ -240,6 +241,8 @@ public class AirbnbApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: Loads properties from file
     private void loadProperties() {
         try {
             propertyList = jsonReader.read();

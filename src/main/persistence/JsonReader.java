@@ -65,7 +65,7 @@ public class JsonReader {
         String name = jsonObject.getString("airbnbName");
         Airbnb airbnb = new Airbnb(name);
         JSONArray reservations = jsonObject.getJSONArray("reservations");
-        List reservationList = airbnb.getReservations();
+        List reservationList;
         reservationList = reservations.toList();
         airbnb.setReservations(reservationList);
         pp.addProperties(airbnb);

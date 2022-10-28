@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Represents an Airbnb that has a name and a schedule that represents one month
-public class Airbnb implements Writable {
+public class Airbnb {
 
     private static final int DAY_COUNT = 31; //Number of days a house will display
 
@@ -117,11 +117,11 @@ public class Airbnb implements Writable {
     }
 
     //EFFECTS: Returns this as JSON object
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("airbnb name", airbnbName);
-        json.put("reservations", reservations);
-        return json;
-    }
+//    @Override
+//    public JSONObject toJson() {
+//        JSONObject json = new JSONObject();
+//        json.put("airbnb name", airbnbName);
+//        json.put("reservations", reservations);
+//        return json;
+//    }
 }
