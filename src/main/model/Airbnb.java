@@ -116,6 +116,7 @@ public class Airbnb implements Writable {
         return airbnbName;
     }
 
+    //EFFECTS: Returns this as JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -12,19 +12,24 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
+//Represents a reader that reads Properties from JSON data stored in file
 public class JsonReader {
     private String fileLocation;
 
+    //EFFECTS: Constructs reader to read from file location
     public JsonReader(String fileLocation) {
         this.fileLocation = fileLocation;
     }
 
+    //EFFECTS: Reads properties from file and returns it;
+    // throws IOException if error occurs reading data from file
     public Properties read() throws IOException {
         String jsonData = readFile(fileLocation);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseProperties(jsonObject);
     }
 
+    //EFFECTS: Reads file as a string and returns it
     private String readFile(String fileLocation) throws IOException {
         StringBuilder builder = new StringBuilder();
 
@@ -36,12 +41,15 @@ public class JsonReader {
 
     }
 
+    //EFFECTS: Parses properties from JSON object and returns it
     private Properties parseProperties(JSONObject jsonObject) {
         Properties pp = new Properties();
         addProperties(pp, jsonObject);
         return pp;
     }
 
+    //MODIFIES: pp
+    //EFFECTS: Parses properties from JSON object and adds them to properties
     private void addProperties(Properties pp, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("properties");
         for (Object json : jsonArray) {
@@ -51,6 +59,8 @@ public class JsonReader {
 
     }
 
+    //MODIFIES: pp
+    //EFFECTS: Parses airbnb from JSON object and adds it to properties
     private void addProperty(Properties pp, JSONObject jsonObject) {
         String name = jsonObject.getString("airbnbName");
         Airbnb airbnb = new Airbnb(name);
