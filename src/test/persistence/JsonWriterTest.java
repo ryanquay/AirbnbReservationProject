@@ -21,6 +21,7 @@ public class JsonWriterTest extends JsonTest{
             fail("IOException was expected");
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Test passed");
         }
     }
 
