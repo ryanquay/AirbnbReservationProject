@@ -79,9 +79,9 @@ public class AirbnbApp {
         System.out.println("\nWelcome! Select from: ");
         System.out.println("a -> Admin");
         System.out.println("c -> Customer");
-        System.out.println("s -> save properties to file");
-        System.out.println("l -> load properties from file");
-        System.out.println("q -> quit");
+        System.out.println("s -> Save properties to file");
+        System.out.println("l -> Load properties from file");
+        System.out.println("q -> Quit");
     }
 
     /*
@@ -150,6 +150,7 @@ public class AirbnbApp {
     private void displayCustomerMenu() {
         System.out.println("\nSelect from: ");
         System.out.println("s -> See all available properties");
+        System.out.println(("d -> Display reservation information"));
         System.out.println("m -> Make reservations");
         System.out.println("c -> Cancel reservations");
         System.out.println("v -> View properties that you have reservations for");
@@ -163,6 +164,8 @@ public class AirbnbApp {
     private void processCustomerCommands(String command) {
         if (command.equals("s")) {
             System.out.println(propertyList.seeAllProperties());
+        } else if (command.equals("d")) {
+            displayReservationInformation();
         } else if (command.equals("m")) {
             makeReservation();
         } else if (command.equals("c")) {
@@ -178,12 +181,31 @@ public class AirbnbApp {
         }
     }
 
+    private void displayReservationInformation() {
+        System.out.println("Choose the property you want to see information for: ");
+        System.out.println(propertyList.seeAllProperties());
+        airbnbName = input.next();
+        if (propertyList.airbnbExists(airbnbName)) {
+            for (int i = 0; i < propertyList.getProperties().size(); i++) {
+                if (propertyList.getProperties().get(i).getAirbnbName().equals(airbnbName)) {
+                    System.out.println(propertyList.getProperties().get(i).displayReservationInformation());
+                    break;
+                }
+            }
+        } else {
+            System.out.println("List of Airbnb names: ");
+            System.out.println(propertyList.seeAllProperties());
+        }
+
+    }
+
     /*
      * MODIFIES: this
      * EFFECTS: Processes user input to determine if they can make a reservation
      */
     private void makeReservation() {
         System.out.println("Choose the Airbnb name you want to make reservations at: ");
+        System.out.println(propertyList.seeAllProperties());
         airbnbName = input.next();
         if (propertyList.airbnbExists(airbnbName)) {
             for (int i = 0; i < propertyList.getProperties().size(); i++) {
