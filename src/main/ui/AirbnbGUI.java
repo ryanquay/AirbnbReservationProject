@@ -11,6 +11,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
 
 
     private JTextArea field;
+    private MenuPanel mp;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public AirbnbGUI() {
@@ -23,66 +24,32 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         content.setBorder(padding);
 
         //
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(3, 4, 25, 50));
 
-        JButton adminBtn = new JButton("Admin");
-        JButton customerBtn = new JButton("Customer");
         JButton saveBtn = new JButton("Save Properties");
         JButton loadBtn = new JButton("Load Properties");
         JButton quitBtn = new JButton("Exit");
         JButton loginBtn = new JButton("Login");
-        JButton addBtn = new JButton("Add Airbnb");
-        JButton removeBtn = new JButton("Remove Airbnb");
-        JButton backBtn1 = new JButton("Main Menu");
-        JButton backBtn2 = new JButton("Main Menu");
-        JButton reserveBtn = new JButton("Make Reservation");
-        JButton cancelBtn = new JButton("Cancel Reservations");
-        JButton reservationInfoBtn1 = new JButton("Display Reservation Info");
-        JButton reservationInfoBtn2 = new JButton("Display Reservation Info");
-        JButton fillerBtn1 = new JButton();
-        JButton fillerBtn2 = new JButton();
-        fillerBtn1.setEnabled(false);
-        fillerBtn1.setVisible(false);
-        fillerBtn2.setEnabled(false);
-        fillerBtn2.setVisible(false);
-
-        buttonsPanel.add(fillerBtn1);
-        buttonsPanel.add(adminBtn);
-        buttonsPanel.add(customerBtn);
-        buttonsPanel.add(fillerBtn2);
-        buttonsPanel.add(addBtn);
-        buttonsPanel.add(removeBtn);
-        buttonsPanel.add(reservationInfoBtn1);
-        buttonsPanel.add(backBtn1);
-        buttonsPanel.add(reserveBtn);
-        buttonsPanel.add(cancelBtn);
-        buttonsPanel.add(reservationInfoBtn2);
-        buttonsPanel.add(backBtn2);
-
-        //
-        adminBtn.setActionCommand("myButton");
-        adminBtn.addActionListener(this); // Sets "this" object as an action listener for btn
-        // so that when the btn is clicked,
-        // this.actionPerformed(ActionEvent e) will be called.
-        // You could also set a different object, if you wanted
-        // a different object to respond to the button click
-
-        customerBtn.setActionCommand("myButton");
-        customerBtn.addActionListener(this);
 
         //
         JPanel sideButtons = new JPanel();
         sideButtons.setLayout(new FlowLayout());
         Box sideBox = Box.createVerticalBox();
         sideBox.add(saveBtn);
-        sideBox.add(Box.createRigidArea(new Dimension(0,10)));
+        sideBox.add(Box.createRigidArea(new Dimension(0, 10)));
         sideBox.add(loadBtn);
-        sideBox.add(Box.createRigidArea(new Dimension(0,10)));
+        sideBox.add(Box.createRigidArea(new Dimension(0, 10)));
         sideBox.add(quitBtn);
         sideButtons.add(sideBox);
 
+
+
         //
+        field = new JTextArea();
+        field.setPreferredSize(new Dimension(1500, 50));
+        field.setEditable(false);
+        mp = new MenuPanel();
+
+
         Box loginBox = Box.createHorizontalBox();
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new FlowLayout());
@@ -93,17 +60,12 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         Box vertBox = Box.createVerticalBox();
         loginBox.add(nameField);
         loginBox.add(loginBtn);
-        vertBox.add(buttonsPanel);
+        vertBox.add(mp);
         vertBox.add(Box.createRigidArea(new Dimension(0,10)));
         vertBox.add(loginBox);
         loginPanel.add(vertBox);
-
         //
-        field = new JTextArea();
-        field.setPreferredSize(new Dimension(1500,50));
-        field.setEditable(false);
 
-        //
         content.add(field, BorderLayout.SOUTH);
         content.add(loginPanel, BorderLayout.NORTH);
         content.add(sideButtons, BorderLayout.EAST);
@@ -111,7 +73,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         //
         setContentPane(content);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(1500,1000));
+        setPreferredSize(new Dimension(1500, 1000));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -129,4 +91,6 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             field.setText("Hello");
         }
     }
+
+
 }
