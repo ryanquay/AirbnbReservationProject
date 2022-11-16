@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-//ISSUES WITH QUITTING AFTER PROCESSING SOME INPUTS WITH SCANNER. ASK TA.
 
 
 //Airbnb application

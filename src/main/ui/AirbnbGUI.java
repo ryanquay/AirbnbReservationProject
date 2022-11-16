@@ -1,25 +1,50 @@
 package ui;
 
+import model.Airbnb;
+import model.Properties;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.jar.JarEntry;
 
 public class AirbnbGUI extends JFrame implements ActionListener {
 
 
     private JTextArea field;
     private ArrayList<JTextArea> dates = new ArrayList<>();
+    private Properties propertyList;
+    private JButton adminBtn;
+    private JButton customerBtn;
+    private JButton addBtn;
+    private JButton removeBtn;
+    private JButton backBtn1;
+    private JButton reservationInfoBtn1;
+    private JButton backBtn2;
+    private JButton reserveBtn;
+    private JButton cancelBtn;
+    private JButton reservationInfoBtn2;
+    private JButton loginBtn;
+    private Box loginBox;
+    JPanel content;
+    JPanel currentCalendar = new JPanel();
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public AirbnbGUI() {
         super("Airbnb Manager");
+        //
+        propertyList = new Properties();
+        propertyList.addProperties(new Airbnb("House1"));
+
 
         //
-        JPanel content = new JPanel();
+        content = new JPanel();
         content.setLayout(new BorderLayout());
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         content.setBorder(padding);
@@ -28,20 +53,20 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(3, 4, 25, 50));
 
-        JButton adminBtn = new JButton("Admin");
-        JButton customerBtn = new JButton("Customer");
+        adminBtn = new JButton("Admin");
+        customerBtn = new JButton("Customer");
         JButton saveBtn = new JButton("Save Properties");
         JButton loadBtn = new JButton("Load Properties");
         JButton quitBtn = new JButton("Exit");
-        JButton loginBtn = new JButton("Login");
-        JButton addBtn = new JButton("Add Airbnb");
-        JButton removeBtn = new JButton("Remove Airbnb");
-        JButton backBtn1 = new JButton("Main Menu");
-        JButton backBtn2 = new JButton("Main Menu");
-        JButton reserveBtn = new JButton("Make Reservation");
-        JButton cancelBtn = new JButton("Cancel Reservations");
-        JButton reservationInfoBtn1 = new JButton("Display Reservation Info");
-        JButton reservationInfoBtn2 = new JButton("Display Reservation Info");
+        loginBtn = new JButton("Login");
+        addBtn = new JButton("Add Airbnb");
+        removeBtn = new JButton("Remove Airbnb");
+        backBtn1 = new JButton("Main Menu");
+        backBtn2 = new JButton("Main Menu");
+        reserveBtn = new JButton("Make Reservation");
+        cancelBtn = new JButton("Cancel Reservations");
+        reservationInfoBtn1 = new JButton("Display Reservation Info");
+        reservationInfoBtn2 = new JButton("Display Reservation Info");
         JButton fillerBtn1 = new JButton();
         JButton fillerBtn2 = new JButton();
         fillerBtn1.setEnabled(false);
@@ -62,16 +87,34 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         buttonsPanel.add(reservationInfoBtn2);
         buttonsPanel.add(backBtn2);
 
-        //
-        adminBtn.setActionCommand("myButton");
-        adminBtn.addActionListener(this); // Sets "this" object as an action listener for btn
-        // so that when the btn is clicked,
-        // this.actionPerformed(ActionEvent e) will be called.
-        // You could also set a different object, if you wanted
-        // a different object to respond to the button click
+        addBtn.setVisible(false);
+        removeBtn.setVisible(false);
+        backBtn1.setVisible(false);
+        reservationInfoBtn1.setVisible(false);
 
-        customerBtn.setActionCommand("myButton");
+        reserveBtn.setVisible(false);
+        cancelBtn.setVisible(false);
+        reservationInfoBtn2.setVisible(false);
+        backBtn2.setVisible(false);
+
+        //
+        adminBtn.setActionCommand("admin");
+        adminBtn.addActionListener(this);
+
+        customerBtn.setActionCommand("customer");
         customerBtn.addActionListener(this);
+
+        backBtn1.setActionCommand("back");
+        backBtn1.addActionListener(this);
+        backBtn2.setActionCommand("back");
+        backBtn2.addActionListener(this);
+
+        loginBtn.setActionCommand("login");
+        loginBtn.addActionListener(this);
+
+
+        quitBtn.setActionCommand("quit");
+        quitBtn.addActionListener(this);
 
         //
         JPanel sideButtons = new JPanel();
@@ -85,11 +128,13 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         sideButtons.add(sideBox);
 
         //
-        Box loginBox = Box.createHorizontalBox();
+        loginBox = Box.createHorizontalBox();
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new FlowLayout());
         JTextField nameField = new JTextField();
         nameField.setMaximumSize(new Dimension(200, 30));
+
+        loginBox.setVisible(false);
 
         //
         Box vertBox = Box.createVerticalBox();
@@ -101,21 +146,39 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         loginPanel.add(vertBox);
 
         //
+        JLabel propertiesLabel = new JLabel("List of available properties");
         field = new JTextArea();
         field.setPreferredSize(new Dimension(1500, 50));
         field.setEditable(false);
-
-        JPanel calendarPanel = makeCalendar();
+        field.setText(propertyList.seeAllProperties().toString());
+        field.setAlignmentX(Component.LEFT_ALIGNMENT);
+        Box areaBox = Box.createVerticalBox();
+        areaBox.add(propertiesLabel);
+        areaBox.add(field);
         //
-        content.add(field, BorderLayout.SOUTH);
+        JPanel westPanel = new JPanel();
+        westPanel.setLayout(new FlowLayout());
+        Box westBox = Box.createVerticalBox();
+        JLabel addLabel = new JLabel("Property Name");
+        JTextField addField = new JTextField();
+
+        westBox.add(addLabel);
+        westBox.add(addField);
+
+        westPanel.add(westBox);
+
+        //JPanel calendarPanel = makeCalendar();
+        //
+        content.add(areaBox, BorderLayout.SOUTH);
         content.add(loginPanel, BorderLayout.NORTH);
         content.add(sideButtons, BorderLayout.EAST);
-        content.add(calendarPanel, BorderLayout.CENTER);
+        content.add(westPanel, BorderLayout.WEST);
+        //content.add(calendarPanel, BorderLayout.CENTER);
 
         //
         setContentPane(content);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(1500, 1000));
+        setPreferredSize(new Dimension(1000, 800));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -128,9 +191,31 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         JPanel calendarPanel = new JPanel();
         calendarPanel.setLayout(new GridLayout(5, 7, 25, 25));
         for (int i = 1; i <= 31; i++) {
-            JTextArea date = new JTextArea(i + "\n\n\n                      Test");
+            JTextArea date = new JTextArea();
             date.setEditable(false);
-            calendarPanel.add(date);
+            date.setText("Available");
+            Box dateBox = Box.createVerticalBox();
+            JLabel dateNumber = new JLabel(String.valueOf(i));
+            dateBox.add(dateNumber);
+            dateBox.add(date);
+            calendarPanel.add(dateBox);
+            dates.add(date);
+        }
+        return calendarPanel;
+    }
+
+    private JPanel makeCalendar2() {
+        JPanel calendarPanel = new JPanel();
+        calendarPanel.setLayout(new GridLayout(5, 7, 25, 25));
+        for (int i = 1; i <= 31; i++) {
+            JTextArea date = new JTextArea();
+            date.setEditable(false);
+            date.setText("Test");
+            Box dateBox = Box.createVerticalBox();
+            JLabel dateNumber = new JLabel(String.valueOf(i));
+            dateBox.add(dateNumber);
+            dateBox.add(date);
+            calendarPanel.add(dateBox);
             dates.add(date);
         }
         return calendarPanel;
@@ -140,12 +225,52 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         new AirbnbGUI();
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("myButton")) {
-            field.setText("Hello");
+        if (e.getActionCommand().equals("admin")) {
+            addBtn.setVisible(true);
+            removeBtn.setVisible(true);
+            backBtn1.setVisible(true);
+            reservationInfoBtn1.setVisible(true);
+            adminBtn.setVisible(false);
+            customerBtn.setVisible(false);
+        } else if (e.getActionCommand().equals("customer")) {
+            adminBtn.setVisible(false);
+            customerBtn.setVisible(false);
+            loginBox.setVisible(true);
+            loginBtn.setVisible(true);
+        } else if (e.getActionCommand().equals("back")) {
+            adminBtn.setVisible(true);
+            customerBtn.setVisible(true);
+            addBtn.setVisible(false);
+            removeBtn.setVisible(false);
+            backBtn1.setVisible(false);
+            reservationInfoBtn1.setVisible(false);
+            reserveBtn.setVisible(false);
+            cancelBtn.setVisible(false);
+            reservationInfoBtn2.setVisible(false);
+            backBtn2.setVisible(false);
+            loginBox.setVisible(false);
+            content.remove(currentCalendar);
+            JPanel calendarPanel2 = makeCalendar2();
+            currentCalendar = calendarPanel2;
+            content.add(calendarPanel2, BorderLayout.CENTER);
+            content.revalidate();
+
+        } else if (e.getActionCommand().equals("login")) {
+            JPanel calendarPanel = makeCalendar();
+            currentCalendar = calendarPanel;
+            content.add(currentCalendar, BorderLayout.CENTER);
+            loginBtn.setVisible(false);
+            reserveBtn.setVisible(true);
+            cancelBtn.setVisible(true);
+            reservationInfoBtn2.setVisible(true);
+            backBtn2.setVisible(true);
+        } else if (e.getActionCommand().equals("quit")) {
+            System.exit(0);
         }
     }
-
+//https://stackoverflow.com/questions/2501861/how-can-i-remove-a-jpanel-from-a-jframe
 
 }
