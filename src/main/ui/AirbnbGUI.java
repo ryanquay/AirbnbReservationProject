@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class AirbnbGUI extends JFrame implements ActionListener {
 
-
     private JTextArea propertiesField;
     private ArrayList<JTextArea> dates = new ArrayList<>();
     private Properties propertyList;
@@ -28,6 +27,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
     private JButton reservationInfoBtn2;
     private JButton loginBtn;
     private Box loginBox;
+    private JTextField checkInField;
+    private JTextField checkOutField;
     JPanel content;
     JPanel currentCalendar;
     String loginName;
@@ -41,9 +42,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         super("Airbnb Manager");
         //
         propertyList = new Properties();
-        Airbnb airbnb = new Airbnb("House1");
-        propertyList.addProperties(airbnb);
-        airbnb.makeReservation("Ryan", 2, 7);
+        propertyList.addProperties(new Airbnb("House1"));
 
 
         //
@@ -127,6 +126,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         reservationInfoBtn2.setActionCommand("seeInfo");
         reservationInfoBtn2.addActionListener(this);
 
+        reserveBtn.setActionCommand("reserve");
+        reserveBtn.addActionListener(this);
 
         quitBtn.setActionCommand("quit");
         quitBtn.addActionListener(this);
@@ -177,21 +178,31 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         JLabel addLabel = new JLabel("Property Name");
         propertyNameField = new JTextField();
 
+        JLabel checkInLabel = new JLabel("Check in date");
+        JLabel checkOutLabel = new JLabel("Check out date");
+        checkInField = new JTextField();
+        checkOutField = new JTextField();
+
         westBox.add(addLabel);
         westBox.add(propertyNameField);
+        westBox.add(Box.createRigidArea(new Dimension(0, 10)));
+        westBox.add(checkInLabel);
+        westBox.add(checkInField);
+        westBox.add(checkOutLabel);
+        westBox.add(checkOutField);
 
         westPanel.add(westBox);
 
 
-        calendarPanel = makeCalendar(airbnb);
+        calendarPanel = makeCalendar(propertyList.getProperties().get(0));
         currentCalendar = calendarPanel;
-        content.add(currentCalendar, BorderLayout.CENTER);
+        currentCalendar.setVisible(false);
         //
+        content.add(currentCalendar, BorderLayout.CENTER);
         content.add(areaBox, BorderLayout.SOUTH);
         content.add(loginPanel, BorderLayout.NORTH);
         content.add(sideButtons, BorderLayout.EAST);
         content.add(westPanel, BorderLayout.WEST);
-
 
         //
 
@@ -260,8 +271,6 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             reservationInfoBtn2.setVisible(false);
             backBtn2.setVisible(false);
             loginBox.setVisible(false);
-
-
         } else if (e.getActionCommand().equals("login")) {
 
             loginBtn.setVisible(false);
@@ -291,7 +300,21 @@ public class AirbnbGUI extends JFrame implements ActionListener {
                     content.repaint();
                 }
             }
+        } else if (e.getActionCommand().equals("reserve")) {
+            Airbnb chosenAirbnb = null;
+            if (propertyList.airbnbExists(propertyNameField.getText())) {
+                for (int i = 0; i < propertyList.getProperties().size(); i++) {
+                    if (propertyList.getProperties().get(i).getAirbnbName().equals(propertyNameField.getText())) {
+                        chosenAirbnb = propertyList.getProperties().get(i);
+                        break;
+                    }
+                }
+                int checkIn = Integer.parseInt(checkInField.getText());
+                int checkOut = Integer.parseInt(checkOutField.getText());
+                chosenAirbnb.makeReservation(loginName, checkIn, checkOut);
+            }
+
         }
-//https://stackoverflow.com/questions/2501861/how-can-i-remove-a-jpanel-from-a-jframe
     }
 }
+//https://stackoverflow.com/questions/2501861/how-can-i-remove-a-jpanel-from-a-jframe
