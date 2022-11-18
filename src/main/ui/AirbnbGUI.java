@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+//Airbnb application with a gui
 public class AirbnbGUI extends JFrame implements ActionListener {
 
     private JTextArea propertiesField;
@@ -36,30 +37,39 @@ public class AirbnbGUI extends JFrame implements ActionListener {
     String loginName;
     JTextField nameField;
     JTextField propertyNameField;
-
     JPanel calendarPanel;
 
     private static final String JSON_STORE = "./data/properties.json";  //Location to store saved data file
     private JsonWriter jsonWriter; //Writer
     private JsonReader jsonReader; //Reader
 
+    public static void main(String[] args) {
+        new AirbnbGUI();
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets up a JFrame with many components, which include panels, buttons, etc
+     */
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public AirbnbGUI() {
         super("Airbnb Manager");
-        //
+
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
+        //Add 1 airbnb to start
         propertyList = new Properties();
         propertyList.addProperties(new Airbnb("House1"));
 
 
-        //
+        //Main content panel
         content = new JPanel();
         content.setLayout(new BorderLayout());
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         content.setBorder(padding);
 
-        //
+        //Panel that will contain the main buttons
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(3, 4, 25, 50));
 
@@ -107,7 +117,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         reservationInfoBtn2.setVisible(false);
         backBtn2.setVisible(false);
 
-        //
+        //Add action listeners to required buttons
         adminBtn.setActionCommand("admin");
         adminBtn.addActionListener(this);
 
@@ -149,36 +159,35 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         loadBtn.setActionCommand("load");
         loadBtn.addActionListener(this);
 
-        //
-        JPanel sideButtons = new JPanel();
-        sideButtons.setLayout(new FlowLayout());
+        //Create panel for the save,load, quit buttons
+        JPanel rightSideButtons = new JPanel();
+        rightSideButtons.setLayout(new FlowLayout());
         Box sideBox = Box.createVerticalBox();
         sideBox.add(saveBtn);
         sideBox.add(Box.createRigidArea(new Dimension(0, 10)));
         sideBox.add(loadBtn);
         sideBox.add(Box.createRigidArea(new Dimension(0, 10)));
         sideBox.add(quitBtn);
-        sideButtons.add(sideBox);
+        rightSideButtons.add(sideBox);
 
-        //
-        loginBox = Box.createHorizontalBox();
+        //Create HBox for login
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new FlowLayout());
+        loginBox = Box.createHorizontalBox();
         nameField = new JTextField();
         nameField.setMaximumSize(new Dimension(200, 30));
-
         loginBox.setVisible(false);
-
-        //
-        Box vertBox = Box.createVerticalBox();
         loginBox.add(nameField);
         loginBox.add(loginBtn);
+
+        //VBox and Panel to hold buttons and login
+        Box vertBox = Box.createVerticalBox();
         vertBox.add(buttonsPanel);
         vertBox.add(Box.createRigidArea(new Dimension(0, 10)));
         vertBox.add(loginBox);
         loginPanel.add(vertBox);
 
-        //
+        //Area at bottom to display properties at all times
         JLabel propertiesLabel = new JLabel("List of available Airbnbs");
         propertiesField = new JTextArea();
         propertiesField.setPreferredSize(new Dimension(1500, 50));
@@ -188,7 +197,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         Box areaBox = Box.createVerticalBox();
         areaBox.add(propertiesLabel);
         areaBox.add(propertiesField);
-        //
+
+        //Panel to add components on the left side
         JPanel westPanel = new JPanel();
         westPanel.setLayout(new FlowLayout());
         Box westBox = Box.createVerticalBox();
@@ -207,20 +217,19 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         westBox.add(checkInField);
         westBox.add(checkOutLabel);
         westBox.add(checkOutField);
-
         westPanel.add(westBox);
 
-
+        //Create initial calendar panel
         calendarPanel = makeCalendar(propertyList.getProperties().get(0));
         currentCalendar = calendarPanel;
         currentCalendar.setVisible(false);
-        //
+
+        //Add all panels in required locations main content panel
         content.add(currentCalendar, BorderLayout.CENTER);
         content.add(areaBox, BorderLayout.SOUTH);
         content.add(loginPanel, BorderLayout.NORTH);
-        content.add(sideButtons, BorderLayout.EAST);
+        content.add(rightSideButtons, BorderLayout.EAST);
         content.add(westPanel, BorderLayout.WEST);
-
         //
 
         setContentPane(content);
@@ -234,7 +243,11 @@ public class AirbnbGUI extends JFrame implements ActionListener {
 
     }
 
-
+    /*
+     * MODIFIES: this
+     * EFFECTS: Takes an Airbnb as an argument, and creates a calendar-like
+     * format using its data. Returns it as a JPanel.
+     */
     private JPanel makeCalendar(Airbnb airbnb) {
         JPanel calendarPanel = new JPanel();
         calendarPanel.setLayout(new GridLayout(5, 7, 25, 25));
@@ -255,29 +268,30 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         return calendarPanel;
     }
 
-
-    public static void main(String[] args) {
-        new AirbnbGUI();
-    }
-
+    /*
+     * MODIFIES: this
+     * EFFECTS: Executes different procedures depending on the button clicked*/
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("admin")) {
+
+        if (e.getActionCommand().equals("admin")) { //Options for admin revealed
             addBtn.setVisible(true);
             removeBtn.setVisible(true);
             backBtn1.setVisible(true);
             reservationInfoBtn1.setVisible(true);
             adminBtn.setVisible(false);
             customerBtn.setVisible(false);
-        } else if (e.getActionCommand().equals("customer")) {
+
+        } else if (e.getActionCommand().equals("customer")) { //Login appears
             adminBtn.setVisible(false);
             customerBtn.setVisible(false);
             loginBox.setVisible(true);
             nameField.setVisible(true);
             nameField.setText("");
             loginBtn.setVisible(true);
-        } else if (e.getActionCommand().equals("back")) {
+
+        } else if (e.getActionCommand().equals("back")) { //Goes back to initial startup screen
             adminBtn.setVisible(true);
             customerBtn.setVisible(true);
             addBtn.setVisible(false);
@@ -289,7 +303,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             reservationInfoBtn2.setVisible(false);
             backBtn2.setVisible(false);
             loginBox.setVisible(false);
-        } else if (e.getActionCommand().equals("login")) {
+
+        } else if (e.getActionCommand().equals("login")) { //Shows options available for customer
             loginBtn.setVisible(false);
             reserveBtn.setVisible(true);
             cancelBtn.setVisible(true);
@@ -297,15 +312,19 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             backBtn2.setVisible(true);
             nameField.setVisible(false);
             loginName = nameField.getText();
-        } else if (e.getActionCommand().equals("quit")) {
+
+        } else if (e.getActionCommand().equals("quit")) { //Quit application
             System.exit(0);
-        } else if (e.getActionCommand().equals("add")) {
+
+        } else if (e.getActionCommand().equals("add")) { //Adds Airbnb
             propertyList.addProperties(new Airbnb(propertyNameField.getText()));
             propertiesField.setText(propertyList.seeAllProperties().toString());
+
         } else if (e.getActionCommand().equals("remove")) {
             propertyList.removeProperties(propertyNameField.getText());
             propertiesField.setText(propertyList.seeAllProperties().toString());
-        } else if (e.getActionCommand().equals("seeInfo")) {
+
+        } else if (e.getActionCommand().equals("seeInfo")) { //Displays information of specific Airbnb
             if (propertyList.airbnbExists(propertyNameField.getText())) {
                 for (int i = 0; i < propertyList.getProperties().size(); i++) {
                     if (propertyList.getProperties().get(i).getAirbnbName().equals(propertyNameField.getText())) {
@@ -318,7 +337,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
                     }
                 }
             }
-        } else if (e.getActionCommand().equals("reserve")) {
+
+        } else if (e.getActionCommand().equals("reserve")) { //Reserves dates in a specific Airbnb
             Airbnb chosenAirbnb = null;
             if (propertyList.airbnbExists(propertyNameField.getText())) {
                 for (int i = 0; i < propertyList.getProperties().size(); i++) {
@@ -339,7 +359,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
                     content.repaint();
                 }
             }
-        } else if (e.getActionCommand().equals("cancel")) {
+
+        } else if (e.getActionCommand().equals("cancel")) { //Cancels reservations for a customer in a specific Airbnb
             Airbnb chosenAirbnb = null;
             if (propertyList.airbnbExists(propertyNameField.getText())) {
                 for (int i = 0; i < propertyList.getProperties().size(); i++) {
@@ -356,7 +377,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
                 content.revalidate();
                 content.repaint();
             }
-        } else if (e.getActionCommand().equals("save")) {
+
+        } else if (e.getActionCommand().equals("save")) { //Saves data to file
             try {
                 jsonWriter.open();
                 jsonWriter.write(propertyList);
@@ -365,7 +387,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             } catch (FileNotFoundException f) {
                 System.out.println("Unable to write to file: " + JSON_STORE);
             }
-        } else if (e.getActionCommand().equals("load")) {
+        } else if (e.getActionCommand().equals("load")) { //Loads data from file
             try {
                 propertyList = jsonReader.read();
                 System.out.println("Loaded from " + JSON_STORE);
@@ -376,4 +398,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         }
     }
 }
+// Sources used:
+// Provided links in edX
+//https://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
 //https://stackoverflow.com/questions/2501861/how-can-i-remove-a-jpanel-from-a-jframe
