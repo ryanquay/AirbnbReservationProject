@@ -5,11 +5,14 @@ import model.Properties;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -66,7 +69,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         //Main content panel
         content = new JPanel();
         content.setLayout(new BorderLayout());
-        Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         content.setBorder(padding);
 
         //Panel that will contain the main buttons
@@ -170,9 +173,23 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         sideBox.add(quitBtn);
         rightSideButtons.add(sideBox);
 
+        //Create panel to hold an image png
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File("./data/AirbnbLogo.png"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image scaledImage = myPicture.getScaledInstance(250,75,Image.SCALE_DEFAULT);
+        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
+
+        JPanel imagePanel = new JPanel();
+        imagePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        imagePanel.add(picLabel);
         //Create HBox for login
-        JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(new FlowLayout());
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new FlowLayout());
         loginBox = Box.createHorizontalBox();
         nameField = new JTextField();
         nameField.setMaximumSize(new Dimension(200, 30));
@@ -180,12 +197,12 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         loginBox.add(nameField);
         loginBox.add(loginBtn);
 
-        //VBox and Panel to hold buttons and login
+        //VBox and Panel to hold buttons and login and image
         Box vertBox = Box.createVerticalBox();
+        vertBox.add(imagePanel);
         vertBox.add(buttonsPanel);
-        vertBox.add(Box.createRigidArea(new Dimension(0, 10)));
         vertBox.add(loginBox);
-        loginPanel.add(vertBox);
+        northPanel.add(vertBox);
 
         //Area at bottom to display properties at all times
         JLabel propertiesLabel = new JLabel("List of available Airbnbs");
@@ -227,7 +244,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         //Add all panels in required locations main content panel
         content.add(currentCalendar, BorderLayout.CENTER);
         content.add(areaBox, BorderLayout.SOUTH);
-        content.add(loginPanel, BorderLayout.NORTH);
+        content.add(northPanel, BorderLayout.NORTH);
         content.add(rightSideButtons, BorderLayout.EAST);
         content.add(westPanel, BorderLayout.WEST);
         //
