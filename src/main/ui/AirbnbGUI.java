@@ -129,6 +129,9 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         reserveBtn.setActionCommand("reserve");
         reserveBtn.addActionListener(this);
 
+        cancelBtn.setActionCommand("cancel");
+        cancelBtn.addActionListener(this);
+
         quitBtn.setActionCommand("quit");
         quitBtn.addActionListener(this);
 
@@ -258,6 +261,8 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             adminBtn.setVisible(false);
             customerBtn.setVisible(false);
             loginBox.setVisible(true);
+            nameField.setVisible(true);
+            nameField.setText("");
             loginBtn.setVisible(true);
         } else if (e.getActionCommand().equals("back")) {
             adminBtn.setVisible(true);
@@ -272,14 +277,12 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             backBtn2.setVisible(false);
             loginBox.setVisible(false);
         } else if (e.getActionCommand().equals("login")) {
-
             loginBtn.setVisible(false);
             reserveBtn.setVisible(true);
             cancelBtn.setVisible(true);
             reservationInfoBtn2.setVisible(true);
             backBtn2.setVisible(true);
             nameField.setVisible(false);
-
             loginName = nameField.getText();
         } else if (e.getActionCommand().equals("quit")) {
             System.exit(0);
@@ -290,14 +293,16 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             propertyList.removeProperties(propertyNameField.getText());
             propertiesField.setText(propertyList.seeAllProperties().toString());
         } else if (e.getActionCommand().equals("seeInfo")) {
-            for (int i = 0; i < propertyList.getProperties().size(); i++) {
-                if (propertyList.getProperties().get(i).getAirbnbName().equals(propertyNameField.getText())) {
-                    content.remove(currentCalendar);
-                    calendarPanel = makeCalendar(propertyList.getProperties().get(i));
-                    currentCalendar = calendarPanel;
-                    content.add(currentCalendar, BorderLayout.CENTER);
-                    content.revalidate();
-                    content.repaint();
+            if (propertyList.airbnbExists(propertyNameField.getText())) {
+                for (int i = 0; i < propertyList.getProperties().size(); i++) {
+                    if (propertyList.getProperties().get(i).getAirbnbName().equals(propertyNameField.getText())) {
+                        content.remove(currentCalendar);
+                        calendarPanel = makeCalendar(propertyList.getProperties().get(i));
+                        currentCalendar = calendarPanel;
+                        content.add(currentCalendar, BorderLayout.CENTER);
+                        content.revalidate();
+                        content.repaint();
+                    }
                 }
             }
         } else if (e.getActionCommand().equals("reserve")) {
@@ -311,7 +316,32 @@ public class AirbnbGUI extends JFrame implements ActionListener {
                 }
                 int checkIn = Integer.parseInt(checkInField.getText());
                 int checkOut = Integer.parseInt(checkOutField.getText());
-                chosenAirbnb.makeReservation(loginName, checkIn, checkOut);
+                boolean valid = chosenAirbnb.makeReservation(loginName, checkIn, checkOut);
+                if (valid) {
+                    content.remove(currentCalendar);
+                    calendarPanel = makeCalendar(chosenAirbnb);
+                    currentCalendar = calendarPanel;
+                    content.add(currentCalendar, BorderLayout.CENTER);
+                    content.revalidate();
+                    content.repaint();
+                }
+            }
+        } else if (e.getActionCommand().equals("cancel")) {
+            Airbnb chosenAirbnb = null;
+            if (propertyList.airbnbExists(propertyNameField.getText())) {
+                for (int i = 0; i < propertyList.getProperties().size(); i++) {
+                    if (propertyList.getProperties().get(i).getAirbnbName().equals(propertyNameField.getText())) {
+                        chosenAirbnb = propertyList.getProperties().get(i);
+                        break;
+                    }
+                }
+                chosenAirbnb.cancelReservation(loginName);
+                content.remove(currentCalendar);
+                calendarPanel = makeCalendar(chosenAirbnb);
+                currentCalendar = calendarPanel;
+                content.add(currentCalendar, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
             }
 
         }

@@ -59,7 +59,7 @@ public class Airbnb {
             System.out.println("Please choose appropriate check in and/or check out dates.\n");
             return false;
         }
-        for (int i = checkInDate - 1; i < checkOutDate - 1; i++) {
+        for (int i = checkInDate - 1; i <= checkOutDate - 1; i++) {
             if (reservations.get(i) != null) {
                 System.out.println("At least one of your chosen days have been reserved by another person. \n"
                         + "Please choose a timeframe of available days.\n");
