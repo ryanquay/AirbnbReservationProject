@@ -12,12 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class AirbnbGUI extends JFrame implements ActionListener {
 
     private JTextArea propertiesField;
-    private ArrayList<JTextArea> dates = new ArrayList<>();
     private Properties propertyList;
     private JButton adminBtn;
     private JButton customerBtn;
@@ -181,7 +179,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         loginPanel.add(vertBox);
 
         //
-        JLabel propertiesLabel = new JLabel("List of available properties");
+        JLabel propertiesLabel = new JLabel("List of available Airbnbs");
         propertiesField = new JTextArea();
         propertiesField.setPreferredSize(new Dimension(1500, 50));
         propertiesField.setEditable(false);
@@ -253,7 +251,6 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             dateBox.add(dateNumber);
             dateBox.add(date);
             calendarPanel.add(dateBox);
-            dates.add(date);
         }
         return calendarPanel;
     }
