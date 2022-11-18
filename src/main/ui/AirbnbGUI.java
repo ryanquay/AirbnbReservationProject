@@ -2,12 +2,16 @@ package ui;
 
 import model.Airbnb;
 import model.Properties;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AirbnbGUI extends JFrame implements ActionListener {
@@ -37,10 +41,16 @@ public class AirbnbGUI extends JFrame implements ActionListener {
 
     JPanel calendarPanel;
 
+    private static final String JSON_STORE = "./data/properties.json";  //Location to store saved data file
+    private JsonWriter jsonWriter; //Writer
+    private JsonReader jsonReader; //Reader
+
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public AirbnbGUI() {
         super("Airbnb Manager");
         //
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         propertyList = new Properties();
         propertyList.addProperties(new Airbnb("House1"));
 
@@ -134,6 +144,12 @@ public class AirbnbGUI extends JFrame implements ActionListener {
 
         quitBtn.setActionCommand("quit");
         quitBtn.addActionListener(this);
+
+        saveBtn.setActionCommand("save");
+        saveBtn.addActionListener(this);
+
+        loadBtn.setActionCommand("load");
+        loadBtn.addActionListener(this);
 
         //
         JPanel sideButtons = new JPanel();
@@ -230,7 +246,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             if (airbnb.getReservations().get(i) == null) {
                 date.setText("Available");
             } else {
-                date.setText(loginName);
+                date.setText(airbnb.getReservations().get(i));
             }
             Box dateBox = Box.createVerticalBox();
             JLabel dateNumber = new JLabel(String.valueOf(i + 1));
@@ -343,7 +359,23 @@ public class AirbnbGUI extends JFrame implements ActionListener {
                 content.revalidate();
                 content.repaint();
             }
-
+        } else if (e.getActionCommand().equals("save")) {
+            try {
+                jsonWriter.open();
+                jsonWriter.write(propertyList);
+                jsonWriter.close();
+                System.out.println("Saved properties to " + JSON_STORE);
+            } catch (FileNotFoundException f) {
+                System.out.println("Unable to write to file: " + JSON_STORE);
+            }
+        } else if (e.getActionCommand().equals("load")) {
+            try {
+                propertyList = jsonReader.read();
+                System.out.println("Loaded from " + JSON_STORE);
+            } catch (IOException f) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
+            propertiesField.setText(propertyList.seeAllProperties().toString());
         }
     }
 }
