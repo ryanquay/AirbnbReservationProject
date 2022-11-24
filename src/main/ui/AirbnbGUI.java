@@ -56,7 +56,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
      */
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public AirbnbGUI() {
-        super("Airbnb Manager");
+        super("Airbnb GUI");
 
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -64,7 +64,6 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         //Add 1 airbnb to start
         propertyList = new Properties();
         propertyList.addProperties(new Airbnb("House1"));
-
 
         //Main content panel
         content = new JPanel();
@@ -247,17 +246,16 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         content.add(northPanel, BorderLayout.NORTH);
         content.add(rightSideButtons, BorderLayout.EAST);
         content.add(westPanel, BorderLayout.WEST);
-        //
 
+        //
         setContentPane(content);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setPreferredSize(new Dimension(1000, 800));
+        setPreferredSize(new Dimension(1150, 850));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
-
     }
 
     /*

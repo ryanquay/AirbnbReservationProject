@@ -43,6 +43,7 @@ public class Airbnb {
                 displayInformation = displayInformation + reservations.get(i) + "\n";
             }
         }
+
         return displayInformation;
     }
 
