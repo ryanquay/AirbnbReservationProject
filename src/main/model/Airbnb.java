@@ -43,7 +43,6 @@ public class Airbnb {
                 displayInformation = displayInformation + reservations.get(i) + "\n";
             }
         }
-
         return displayInformation;
     }
 
@@ -81,6 +80,8 @@ public class Airbnb {
             reservations.set(i, name);
         }
         System.out.println("Reservations Added.");
+        EventLog.getInstance().logEvent(new Event("Reservation made for " + name + " at "
+                + this.getAirbnbName() + ". Check in: " + checkInDate + ". Check out: " + checkOutDate));
         return true;
     }
 
@@ -101,6 +102,8 @@ public class Airbnb {
             }
         }
         System.out.println("Reservations cancelled.");
+        EventLog.getInstance().logEvent(new Event("Reservation cancelled for " + name
+                + " at " + this.getAirbnbName()));
         return true;
     }
 

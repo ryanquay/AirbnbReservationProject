@@ -35,6 +35,7 @@ public class Properties implements Writable {
         }
         properties.add(airbnb);
         System.out.println("Airbnb added.");
+        EventLog.getInstance().logEvent(new Event("Added Airbnb with the name: " + airbnb.getAirbnbName()));
         return true;
     }
 
@@ -50,6 +51,7 @@ public class Properties implements Writable {
             if (properties.get(i).getAirbnbName().equalsIgnoreCase(name)) {
                 properties.remove(i);
                 System.out.println(name + " removed.");
+                EventLog.getInstance().logEvent(new Event("Removed Airbnb with the name: " + name));
                 return true;
             }
         }

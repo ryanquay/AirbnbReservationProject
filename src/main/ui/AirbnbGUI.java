@@ -1,6 +1,8 @@
 package ui;
 
 import model.Airbnb;
+import model.Event;
+import model.EventLog;
 import model.Properties;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -15,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 //Airbnb application with a gui
 public class AirbnbGUI extends JFrame implements ActionListener {
@@ -180,7 +184,7 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Image scaledImage = myPicture.getScaledInstance(250,75,Image.SCALE_DEFAULT);
+        Image scaledImage = myPicture.getScaledInstance(250, 75, Image.SCALE_DEFAULT);
         JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
 
         JPanel imagePanel = new JPanel();
@@ -329,6 +333,11 @@ public class AirbnbGUI extends JFrame implements ActionListener {
             loginName = nameField.getText();
 
         } else if (e.getActionCommand().equals("quit")) { //Quit application
+            Iterator<Event> events = EventLog.getInstance().iterator();
+            System.out.println("Event Log:");
+            while (events.hasNext()) {
+                System.out.println(events.next());
+            }
             System.exit(0);
 
         } else if (e.getActionCommand().equals("add")) { //Adds Airbnb
