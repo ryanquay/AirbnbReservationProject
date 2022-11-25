@@ -36,20 +36,20 @@
 - To go back to the main menu, click the "main menu" button
 
 ## Phase 4: Task 2
-Event Log:
-Thu Nov 24 18:47:22 PST 2022
+- Event Log:
+- Thu Nov 24 18:47:22 PST 2022
 Added Airbnb with the name: House1
-Thu Nov 24 18:47:38 PST 2022
+- Thu Nov 24 18:47:38 PST 2022
 Added Airbnb with the name: House2
-Thu Nov 24 18:47:40 PST 2022
+- Thu Nov 24 18:47:40 PST 2022
 Added Airbnb with the name: House3
-Thu Nov 24 18:47:44 PST 2022
+- Thu Nov 24 18:47:44 PST 2022
 Removed Airbnb with the name: House3
-Thu Nov 24 18:47:58 PST 2022
+- Thu Nov 24 18:47:58 PST 2022
 Reservation made for Ryan at House1. Check in: 2. Check out: 7
-Thu Nov 24 18:48:06 PST 2022
-Reservation made for Ryan at House2. Check in: 15. Check out: 18
+- Thu Nov 24 18:48:06 PST 2022
+- Reservation made for Ryan at House2. Check in: 15. Check out: 18
 Thu Nov 24 18:48:12 PST 2022
-Reservation cancelled for Ryan at House1
-*Will always start with one house, so House1 will always be added
-*If loading data, it will log and add all Airbnbs from the file
+- Reservation cancelled for Ryan at House1
+- *Will always start with one house, so House1 will always be added
+- *If loading data, it will log and add all Airbnbs from the file
