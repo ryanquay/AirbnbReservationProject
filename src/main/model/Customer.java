@@ -1,6 +1,7 @@
 package model;
 
 //Represents a customer that has a name
+//This class is not used in the application. It is a helper class for testing.
 public class Customer {
     private String name; //The customer name
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +29,7 @@ class AirbnbTest {
         customer2 = new Customer("Bobby Bob");
         properties = new Properties();
         propertyNames = new ArrayList<>();
+        EventLog.getInstance().clear();
 
     }
 
@@ -38,7 +40,7 @@ class AirbnbTest {
 
     @Test
     void TestDisplayReservationInfoNoReservations() {
-        for (String dates: airbnb1.getReservations()) {
+        for (String dates : airbnb1.getReservations()) {
             assertNull(dates);
         }
         System.out.println(airbnb1.displayReservationInformation());
@@ -213,6 +215,53 @@ class AirbnbTest {
         assertTrue(properties.addProperties(airbnb1));
         assertTrue(properties.airbnbExists(airbnb1.getAirbnbName()));
         assertFalse(properties.airbnbExists(airbnb2.getAirbnbName()));
+    }
+
+    @Test
+    void TestAddAirbnbEventLog() {
+        assertTrue(properties.addProperties(airbnb1));
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertEquals("Added Airbnb with the name: " + airbnb1.getAirbnbName(), events.next().getDescription());
+    }
+
+    @Test
+    void TestRemoveAirbnbEventLog() {
+        assertTrue(properties.addProperties(airbnb1));
+        assertTrue(properties.addProperties(airbnb2));
+        assertTrue(properties.removeProperties(airbnb1.getAirbnbName()));
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertEquals("Added Airbnb with the name: " + airbnb1.getAirbnbName(), events.next().getDescription());
+        assertEquals("Added Airbnb with the name: " + airbnb2.getAirbnbName(), events.next().getDescription());
+        assertEquals("Removed Airbnb with the name: " + airbnb1.getAirbnbName(), events.next().getDescription());
+    }
+
+    @Test
+    void TestMakeReservationEventLog() {
+        int checkInDate = 2;
+        int checkOutDate = 5;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkInDate, checkOutDate));
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertEquals("Reservation made for " + customer1.getName() + " at "
+                        + airbnb1.getAirbnbName() + ". Check in: " + checkInDate + ". Check out: " + checkOutDate,
+                events.next().getDescription());
+    }
+
+    @Test
+    void TestCancelReservationEventLog() {
+        int checkInDate = 2;
+        int checkOutDate = 5;
+        assertTrue(airbnb1.makeReservation(customer1.getName(), checkInDate, checkOutDate));
+        assertTrue(airbnb1.cancelReservation(customer1.getName()));
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertEquals("Reservation made for " + customer1.getName() + " at "
+                        + airbnb1.getAirbnbName() + ". Check in: " + checkInDate + ". Check out: " + checkOutDate,
+                events.next().getDescription());
+        assertEquals("Reservation cancelled for " + customer1.getName() + " at " + airbnb1.getAirbnbName(),
+                events.next().getDescription());
     }
 
 
