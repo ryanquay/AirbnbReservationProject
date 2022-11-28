@@ -120,12 +120,4 @@ public class Airbnb {
         return airbnbName;
     }
 
-    //EFFECTS: Returns this as JSON object
-//    @Override
-//    public JSONObject toJson() {
-//        JSONObject json = new JSONObject();
-//        json.put("airbnb name", airbnbName);
-//        json.put("reservations", reservations);
-//        return json;
-//    }
 }

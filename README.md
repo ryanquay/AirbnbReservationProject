@@ -53,3 +53,10 @@ Reservation made for Ryan at House2. Check in: 15. Check out: 18
 Reservation cancelled for Ryan at House1
 - *Will always start with one house, so House1 will always be added
 - *If loading data, it will log and add all Airbnbs from the file
+
+## Phase 4: Task 3
+- Increase cohesion in the AirbnbGUI class. AirbnbGUI method is very large and does basically everything.
+If I had more time, I would have tried to create specific classes that only focus on specific components of the GUI
+- Create methods for each conditional in my actionPerformed method. Too large and messy
+-The displayReservationInformation method in Airbnb cannot be used by the AirbnbGUI class, because its
+implementation was for the console application. This method can be refactored to fit both console and GUI applications
