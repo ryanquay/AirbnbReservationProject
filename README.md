@@ -58,5 +58,5 @@ Reservation cancelled for Ryan at House1
 - Increase cohesion in the AirbnbGUI class. AirbnbGUI method is very large and does basically everything.
 If I had more time, I would have tried to create specific classes that only focus on specific components of the GUI
 - Create methods for each conditional in my actionPerformed method. Too large and messy
--The displayReservationInformation method in Airbnb cannot be used by the AirbnbGUI class, because its
+- The displayReservationInformation method in Airbnb cannot be used by the AirbnbGUI class, because its
 implementation was for the console application. This method can be refactored to fit both console and GUI applications

@@ -50,9 +50,6 @@ public class AirbnbGUI extends JFrame implements ActionListener {
     private JsonWriter jsonWriter; //Writer
     private JsonReader jsonReader; //Reader
 
-    public static void main(String[] args) {
-        new AirbnbGUI();
-    }
 
     /*
      * MODIFIES: this
