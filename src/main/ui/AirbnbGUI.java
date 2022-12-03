@@ -36,51 +36,70 @@ public class AirbnbGUI extends JFrame implements ActionListener {
     private JButton cancelBtn;
     private JButton reservationInfoBtn2;
     private JButton loginBtn;
+    private JButton saveBtn;
+    private JButton loadBtn;
+    private JButton quitBtn;
+    private JButton fillerBtn1;
+    private JButton fillerBtn2;
+    private JPanel rightSideButtons;
     private Box loginBox;
     private JTextField checkInField;
     private JTextField checkOutField;
-    JPanel content;
-    JPanel currentCalendar;
-    String loginName;
-    JTextField nameField;
-    JTextField propertyNameField;
-    JPanel calendarPanel;
+    private JPanel content;
+    private JPanel currentCalendar;
+    private String loginName;
+    private JTextField nameField;
+    private JTextField propertyNameField;
+    private JPanel calendarPanel;
+    private JPanel buttonsPanel;
+    private JPanel imagePanel;
+    private JPanel northPanel;
+    private JPanel westPanel;
+    private Box areaBox;
 
     private static final String JSON_STORE = "./data/properties.json";  //Location to store saved data file
     private JsonWriter jsonWriter; //Writer
     private JsonReader jsonReader; //Reader
 
-
-    /*
-     * MODIFIES: this
-     * EFFECTS: Sets up a JFrame with many components, which include panels, buttons, etc
-     */
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public AirbnbGUI() {
-        super("Airbnb GUI");
-
+    //MODIFIES: this
+    //EFFECTS: Initializes json writer and reader
+    private void initializeJson() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+    }
 
+    //MODIFIES: this
+    //EFFECTS: Adds an initial airbnb to property list
+    private void initializePropertyList() {
         //Add 1 airbnb to start
         propertyList = new Properties();
         propertyList.addProperties(new Airbnb("House1"));
+    }
 
-        //Main content panel
+    //MODIFIES: this
+    //EFFECTS: Sets up the main panel where different components will be added to
+    private void createMainPanel() {
         content = new JPanel();
         content.setLayout(new BorderLayout());
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         content.setBorder(padding);
+    }
 
-        //Panel that will contain the main buttons
-        JPanel buttonsPanel = new JPanel();
+    //MODIFIES: this
+    //EFFECTS: Initialize panel that will contain all the menu buttons
+    private void initializeButtonPanel() {
+        buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(3, 4, 25, 50));
+    }
 
+    //MODIFIES: this
+    //EFFECTS: Initializes all the menu buttons
+    private void initializeMenuButtons() {
         adminBtn = new JButton("Admin");
         customerBtn = new JButton("Customer");
-        JButton saveBtn = new JButton("Save Properties");
-        JButton loadBtn = new JButton("Load Properties");
-        JButton quitBtn = new JButton("Exit");
+        saveBtn = new JButton("Save Properties");
+        loadBtn = new JButton("Load Properties");
+        quitBtn = new JButton("Exit");
         loginBtn = new JButton("Login");
         addBtn = new JButton("Add Airbnb");
         removeBtn = new JButton("Remove Airbnb");
@@ -90,13 +109,17 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         cancelBtn = new JButton("Cancel Reservations");
         reservationInfoBtn1 = new JButton("Display Reservation Info");
         reservationInfoBtn2 = new JButton("Display Reservation Info");
-        JButton fillerBtn1 = new JButton();
-        JButton fillerBtn2 = new JButton();
+        fillerBtn1 = new JButton();
+        fillerBtn2 = new JButton();
         fillerBtn1.setEnabled(false);
         fillerBtn1.setVisible(false);
         fillerBtn2.setEnabled(false);
         fillerBtn2.setVisible(false);
+    }
 
+    //MODIFIES: this
+    //EFFECTS: Adds menu buttons to button panel
+    private void addMenuButtons() {
         buttonsPanel.add(fillerBtn1);
         buttonsPanel.add(adminBtn);
         buttonsPanel.add(customerBtn);
@@ -109,7 +132,11 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(reservationInfoBtn2);
         buttonsPanel.add(backBtn2);
+    }
 
+    //MODIFIES: this
+    //EFFECTS: Sets certain buttons' visibility
+    private void setButtonVisibility() {
         addBtn.setVisible(false);
         removeBtn.setVisible(false);
         backBtn1.setVisible(false);
@@ -119,51 +146,51 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         cancelBtn.setVisible(false);
         reservationInfoBtn2.setVisible(false);
         backBtn2.setVisible(false);
+    }
 
-        //Add action listeners to required buttons
+    //MODIFIES: this
+    //EFFECTS: Sets action commands to buttons
+    private void setActionCommands() {
         adminBtn.setActionCommand("admin");
-        adminBtn.addActionListener(this);
-
         customerBtn.setActionCommand("customer");
-        customerBtn.addActionListener(this);
-
         backBtn1.setActionCommand("back");
-        backBtn1.addActionListener(this);
         backBtn2.setActionCommand("back");
-        backBtn2.addActionListener(this);
-
         loginBtn.setActionCommand("login");
-        loginBtn.addActionListener(this);
-
         addBtn.setActionCommand("add");
-        addBtn.addActionListener(this);
-
         removeBtn.setActionCommand("remove");
-        removeBtn.addActionListener(this);
-
         reservationInfoBtn1.setActionCommand("seeInfo");
-        reservationInfoBtn1.addActionListener(this);
-
         reservationInfoBtn2.setActionCommand("seeInfo");
-        reservationInfoBtn2.addActionListener(this);
-
         reserveBtn.setActionCommand("reserve");
-        reserveBtn.addActionListener(this);
-
         cancelBtn.setActionCommand("cancel");
-        cancelBtn.addActionListener(this);
-
         quitBtn.setActionCommand("quit");
-        quitBtn.addActionListener(this);
-
         saveBtn.setActionCommand("save");
-        saveBtn.addActionListener(this);
-
         loadBtn.setActionCommand("load");
-        loadBtn.addActionListener(this);
+    }
 
+    //MODIFIES: this
+    //EFFECTS: Adds buttons to action listener
+    private void addActionListeners() {
+        adminBtn.addActionListener(this);
+        customerBtn.addActionListener(this);
+        backBtn1.addActionListener(this);
+        backBtn2.addActionListener(this);
+        loginBtn.addActionListener(this);
+        addBtn.addActionListener(this);
+        removeBtn.addActionListener(this);
+        reservationInfoBtn1.addActionListener(this);
+        reservationInfoBtn2.addActionListener(this);
+        reserveBtn.addActionListener(this);
+        cancelBtn.addActionListener(this);
+        quitBtn.addActionListener(this);
+        saveBtn.addActionListener(this);
+        loadBtn.addActionListener(this);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: Creates a panel for the components on the right
+    private void createRightPanel() {
         //Create panel for the save,load, quit buttons
-        JPanel rightSideButtons = new JPanel();
+        rightSideButtons = new JPanel();
         rightSideButtons.setLayout(new FlowLayout());
         Box sideBox = Box.createVerticalBox();
         sideBox.add(saveBtn);
@@ -172,8 +199,11 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         sideBox.add(Box.createRigidArea(new Dimension(0, 10)));
         sideBox.add(quitBtn);
         rightSideButtons.add(sideBox);
+    }
 
-        //Create panel to hold an image png
+    //MODIFIES: this
+    //EFFECTS: Create panel to hold an image png
+    private void createImagePanel() {
         BufferedImage myPicture = null;
         try {
             myPicture = ImageIO.read(new File("./data/AirbnbLogo.png"));
@@ -184,39 +214,53 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         Image scaledImage = myPicture.getScaledInstance(250, 75, Image.SCALE_DEFAULT);
         JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
 
-        JPanel imagePanel = new JPanel();
+        imagePanel = new JPanel();
         imagePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         imagePanel.add(picLabel);
-        //Create HBox for login
-        JPanel northPanel = new JPanel();
-        northPanel.setLayout(new FlowLayout());
+    }
+
+    //MODIFIES: this
+    //EFFECTS: Creates login area
+    private void createLogin() {
         loginBox = Box.createHorizontalBox();
         nameField = new JTextField();
         nameField.setMaximumSize(new Dimension(200, 30));
         loginBox.setVisible(false);
         loginBox.add(nameField);
         loginBox.add(loginBtn);
+    }
 
-        //VBox and Panel to hold buttons and login and image
+    //MODIFIES: this
+    //EFFECTS: Create upper panel that holds, image/button panel, and login box
+    private void createUpperPanel() {
+        northPanel = new JPanel();
+        northPanel.setLayout(new FlowLayout());
         Box vertBox = Box.createVerticalBox();
         vertBox.add(imagePanel);
         vertBox.add(buttonsPanel);
         vertBox.add(loginBox);
         northPanel.add(vertBox);
+    }
 
-        //Area at bottom to display properties at all times
+    //MODIFIES: this
+    //EFFECTS: Creates field that will display properties at all times
+    private void createPropertiesField() {
         JLabel propertiesLabel = new JLabel("List of available Airbnbs");
         propertiesField = new JTextArea();
         propertiesField.setPreferredSize(new Dimension(1500, 50));
         propertiesField.setEditable(false);
         propertiesField.setText(propertyList.seeAllProperties().toString());
         propertiesField.setAlignmentX(Component.LEFT_ALIGNMENT);
-        Box areaBox = Box.createVerticalBox();
+        areaBox = Box.createVerticalBox();
         areaBox.add(propertiesLabel);
         areaBox.add(propertiesField);
+    }
 
+    //MODIFIES: this
+    //EFFECTS: Create panel that will hold components on the left side
+    private void createLeftPanel() {
         //Panel to add components on the left side
-        JPanel westPanel = new JPanel();
+        westPanel = new JPanel();
         westPanel.setLayout(new FlowLayout());
         Box westBox = Box.createVerticalBox();
         JLabel addLabel = new JLabel("Property Name");
@@ -235,28 +279,62 @@ public class AirbnbGUI extends JFrame implements ActionListener {
         westBox.add(checkOutLabel);
         westBox.add(checkOutField);
         westPanel.add(westBox);
+    }
 
-        //Create initial calendar panel
+    //MODIFIES: this
+    //EFFECTS: Creates a calendar panel that is initially hidden
+    private void createCalendarPanel() {
         calendarPanel = makeCalendar(propertyList.getProperties().get(0));
         currentCalendar = calendarPanel;
         currentCalendar.setVisible(false);
+    }
 
-        //Add all panels in required locations main content panel
+    //MODIFIES: this
+    //EFFECTS: Adds all panels to main content panel in their desired locations
+    private void combinePanels() {
         content.add(currentCalendar, BorderLayout.CENTER);
         content.add(areaBox, BorderLayout.SOUTH);
         content.add(northPanel, BorderLayout.NORTH);
         content.add(rightSideButtons, BorderLayout.EAST);
         content.add(westPanel, BorderLayout.WEST);
+    }
 
-        //
+    //MODIFIES: this
+    //EFFECTS: Initializes the JFrame
+    private void initializeJFrame() {
         setContentPane(content);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setPreferredSize(new Dimension(1150, 850));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets up a GUI with many components, which include panels, buttons, etc
+     */
+    public AirbnbGUI() {
+        super("Airbnb GUI");
+        initializeJson();
+        initializePropertyList();
+        createMainPanel();
+        initializeButtonPanel();
+        initializeMenuButtons();
+        addMenuButtons();
+        setButtonVisibility();
+        setActionCommands();
+        addActionListeners();
+        createRightPanel();
+        createImagePanel();
+        createLogin();
+        createUpperPanel();
+        createPropertiesField();
+        createLeftPanel();
+        createCalendarPanel();
+        combinePanels();
+        initializeJFrame();
     }
 
     /*
